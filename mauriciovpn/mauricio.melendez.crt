@@ -1,0 +1,136 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=MX, ST=CDMX, L=Polanco, O=AMX, OU=AMXGADT, CN=AMXGADT/name=AMXGADT/emailAddress=amxgadt@amxdigital.com
+        Validity
+            Not Before: Feb 14 16:52:24 2020 GMT
+            Not After : Feb 11 16:52:24 2030 GMT
+        Subject: C=MX, ST=CDMX, L=Polanco, O=AMX, OU=AMXGADT, CN=mauricio.melendez/name=AMXGADT/emailAddress=amxgadt@amxdigital.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:eb:71:17:57:99:d9:dc:f0:aa:ee:f6:d7:45:f0:
+                    7e:0f:90:d3:91:5c:66:bb:ea:0d:c9:50:14:80:76:
+                    11:25:3a:36:4b:0f:d1:b2:d8:b7:0e:ba:57:f9:78:
+                    32:9f:82:c7:fd:4a:13:51:cd:64:90:b6:c9:b2:1a:
+                    af:3d:b6:df:91:d3:b9:3b:f7:9b:be:6d:c8:a4:90:
+                    d9:02:84:67:1e:e6:75:43:a8:14:14:a1:51:d2:c4:
+                    c7:52:11:99:67:89:a3:c0:39:05:5b:29:32:3f:8d:
+                    1e:72:4e:2e:be:99:ec:15:b8:10:64:dd:2a:02:1e:
+                    14:f0:9e:14:0c:9c:35:3b:77:aa:16:32:f2:9d:5b:
+                    98:48:97:b6:37:ea:14:ef:ef:3c:f7:cc:b2:fb:8d:
+                    74:27:21:8e:ae:92:d5:68:fe:dd:ef:bc:06:b5:19:
+                    0a:f4:4b:65:6c:67:2b:41:02:53:cb:6d:78:2b:d7:
+                    8e:7c:46:8c:8f:fa:b0:44:10:1f:d9:25:ff:41:06:
+                    98:9d:67:50:70:8e:ab:66:74:ec:3e:75:1f:92:97:
+                    0a:00:b5:6d:f6:d0:1c:ce:49:d6:1a:20:5e:03:62:
+                    d9:d4:0c:24:e8:99:8d:bd:ac:a3:88:d1:13:23:63:
+                    9d:31:46:70:b3:d4:10:26:7b:85:fb:c5:7d:1e:0c:
+                    ad:75:ee:6e:fc:62:0a:9c:22:ef:8c:8a:b7:79:1a:
+                    18:9d:df:e6:d2:a2:6b:83:5a:28:82:84:c3:dd:29:
+                    74:c6:c7:2b:30:ad:97:39:36:7b:d9:ee:9a:f4:b4:
+                    f8:d4:02:82:4e:1d:76:f0:3b:6d:9a:4e:c8:29:8d:
+                    3a:ee:ce:88:c3:30:75:2b:82:7c:99:a2:34:45:d2:
+                    24:0c:5f:fb:61:d3:83:29:ef:ac:47:77:0d:87:0d:
+                    29:b9:97:75:04:0f:8f:02:bc:79:88:ed:3e:66:64:
+                    0d:4f:48:aa:82:ad:08:0a:cc:8c:d3:a4:7f:91:8a:
+                    4c:33:89:67:1e:aa:50:9f:51:6d:4c:cb:f4:79:8c:
+                    c2:55:40:18:fd:55:b0:5a:42:0f:2d:8d:d5:15:00:
+                    e2:3d:ad:3e:79:2e:bb:32:b5:0b:0b:b0:f2:51:0f:
+                    b4:1e:a2:73:ed:a5:ef:71:d1:18:5f:5e:25:98:ad:
+                    cc:cd:57:6f:b2:25:94:e2:66:65:dd:3a:f5:4a:ab:
+                    03:0c:8c:6d:4a:12:53:0a:b8:8c:8e:4b:55:ca:c2:
+                    cb:1f:dc:26:7c:f0:4b:cd:39:57:7a:31:42:b8:e5:
+                    f7:65:77:7f:78:3b:c3:76:cd:69:00:ec:a8:89:d3:
+                    2f:00:05:d0:75:aa:81:c7:0a:bc:a1:18:c8:0b:a5:
+                    16:f0:7f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                8F:81:6D:74:1A:16:3A:70:59:23:A9:B5:56:49:17:3E:69:E6:A8:03
+            X509v3 Authority Key Identifier: 
+                keyid:E8:7D:59:6A:76:3D:A0:55:DA:11:32:73:53:F3:6E:C7:0B:A0:D9:B8
+                DirName:/C=MX/ST=CDMX/L=Polanco/O=AMX/OU=AMXGADT/CN=AMXGADT/name=AMXGADT/emailAddress=amxgadt@amxdigital.com
+                serial:B6:C4:60:9E:BE:F4:72:17
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+    Signature Algorithm: sha1WithRSAEncryption
+         3b:7e:1c:c9:d9:70:c4:b5:fe:4b:28:97:51:6b:f1:f0:b2:b7:
+         50:53:d4:e7:84:ea:ca:31:fc:b2:d3:41:03:85:60:ab:23:7e:
+         3f:8d:02:af:9f:02:74:47:0a:6a:82:24:6e:9d:a3:b5:a2:b4:
+         5b:9b:b8:78:6f:58:08:4e:29:aa:ca:4b:e5:a6:51:d2:24:83:
+         28:d2:a5:b6:8e:9c:f1:03:c3:92:f1:b0:b2:cf:13:b3:fe:9a:
+         d4:b4:89:5d:61:b8:6f:be:a3:81:b5:e6:c2:f5:4e:18:fd:ff:
+         e0:6c:09:bc:66:f2:ec:6b:d4:84:dd:14:48:fd:4e:cc:b9:7f:
+         f9:a5:3e:65:03:29:a6:b8:80:69:36:df:c7:fe:b0:ba:6c:af:
+         54:dc:f5:d1:85:76:c2:5a:bc:b8:9c:72:83:ad:b0:85:da:ae:
+         49:ee:65:4a:45:bb:fa:3d:1d:7c:1a:6b:c0:b2:d1:3e:57:eb:
+         64:93:23:e5:e7:8b:93:09:10:7d:3c:73:a6:f9:ca:4a:10:5a:
+         a8:36:32:73:a3:5a:01:1a:a7:1c:49:7a:9c:7e:e2:85:71:74:
+         31:6c:f0:17:d8:34:8d:4d:86:8a:e6:7f:7c:4c:cf:66:35:68:
+         33:62:d6:e8:f3:f4:34:59:69:81:fc:e7:ee:82:25:56:f8:bf:
+         60:03:8c:9e:f5:3d:9e:c3:dc:2b:37:7d:f1:97:c6:a5:1e:f7:
+         e4:6c:30:3b:4a:35:4b:fd:bc:99:1b:1d:33:6c:35:cb:56:06:
+         b4:a5:92:b5:13:24:fb:64:bf:49:1e:93:ea:3a:b1:58:84:92:
+         d9:df:69:c3:59:48:b8:fe:d6:84:7f:ac:44:f2:dc:8e:80:7d:
+         29:ed:fb:1b:fa:38:1e:ec:3b:97:ac:51:4f:11:ba:a3:a3:a9:
+         8f:03:ab:8c:8e:b4:e2:bd:ce:45:ec:57:37:ae:79:d9:46:21:
+         2e:3b:d1:49:fe:be:0c:d7:dd:db:fe:3b:06:25:a5:dc:d7:d8:
+         bb:f2:03:e0:51:ef:e1:0d:f1:9d:61:38:e2:f8:6b:da:e3:8e:
+         fc:96:a8:6e:ca:67:9f:49:81:3a:78:63:30:cf:67:ad:a4:42:
+         46:67:cb:fd:a9:71:7b:a1:24:25:61:e7:8c:fc:3d:7c:c9:70:
+         92:38:82:75:97:90:ac:ea:fb:5b:60:d6:e8:c7:d6:fd:7b:95:
+         36:01:17:88:fc:98:7c:d6:a5:23:57:8e:b3:69:e3:ac:b6:08:
+         e9:eb:da:f5:93:9d:23:f0:b0:cf:67:3e:6b:e8:f0:a6:ed:00:
+         63:41:b6:b5:03:12:a3:21:dd:f5:84:b1:5f:95:1e:2c:43:bc:
+         31:bc:12:0b:84:3c:a1:da
+-----BEGIN CERTIFICATE-----
+MIIHCzCCBPOgAwIBAgIBAjANBgkqhkiG9w0BAQUFADCBmTELMAkGA1UEBhMCTVgx
+DTALBgNVBAgTBENETVgxEDAOBgNVBAcTB1BvbGFuY28xDDAKBgNVBAoTA0FNWDEQ
+MA4GA1UECxMHQU1YR0FEVDEQMA4GA1UEAxMHQU1YR0FEVDEQMA4GA1UEKRMHQU1Y
+R0FEVDElMCMGCSqGSIb3DQEJARYWYW14Z2FkdEBhbXhkaWdpdGFsLmNvbTAeFw0y
+MDAyMTQxNjUyMjRaFw0zMDAyMTExNjUyMjRaMIGjMQswCQYDVQQGEwJNWDENMAsG
+A1UECBMEQ0RNWDEQMA4GA1UEBxMHUG9sYW5jbzEMMAoGA1UEChMDQU1YMRAwDgYD
+VQQLEwdBTVhHQURUMRowGAYDVQQDExFtYXVyaWNpby5tZWxlbmRlejEQMA4GA1UE
+KRMHQU1YR0FEVDElMCMGCSqGSIb3DQEJARYWYW14Z2FkdEBhbXhkaWdpdGFsLmNv
+bTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOtxF1eZ2dzwqu7210Xw
+fg+Q05FcZrvqDclQFIB2ESU6NksP0bLYtw66V/l4Mp+Cx/1KE1HNZJC2ybIarz22
+35HTuTv3m75tyKSQ2QKEZx7mdUOoFBShUdLEx1IRmWeJo8A5BVspMj+NHnJOLr6Z
+7BW4EGTdKgIeFPCeFAycNTt3qhYy8p1bmEiXtjfqFO/vPPfMsvuNdCchjq6S1Wj+
+3e+8BrUZCvRLZWxnK0ECU8tteCvXjnxGjI/6sEQQH9kl/0EGmJ1nUHCOq2Z07D51
+H5KXCgC1bfbQHM5J1hogXgNi2dQMJOiZjb2so4jREyNjnTFGcLPUECZ7hfvFfR4M
+rXXubvxiCpwi74yKt3kaGJ3f5tKia4NaKIKEw90pdMbHKzCtlzk2e9numvS0+NQC
+gk4ddvA7bZpOyCmNOu7OiMMwdSuCfJmiNEXSJAxf+2HTgynvrEd3DYcNKbmXdQQP
+jwK8eYjtPmZkDU9IqoKtCArMjNOkf5GKTDOJZx6qUJ9RbUzL9HmMwlVAGP1VsFpC
+Dy2N1RUA4j2tPnkuuzK1Cwuw8lEPtB6ic+2l73HRGF9eJZitzM1Xb7IllOJmZd06
+9UqrAwyMbUoSUwq4jI5LVcrCyx/cJnzwS805V3oxQrjl92V3f3g7w3bNaQDsqInT
+LwAF0HWqgccKvKEYyAulFvB/AgMBAAGjggFQMIIBTDAJBgNVHRMEAjAAMC0GCWCG
+SAGG+EIBDQQgFh5FYXN5LVJTQSBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0O
+BBYEFI+BbXQaFjpwWSOptVZJFz5p5qgDMIHOBgNVHSMEgcYwgcOAFOh9WWp2PaBV
+2hEyc1PzbscLoNm4oYGfpIGcMIGZMQswCQYDVQQGEwJNWDENMAsGA1UECBMEQ0RN
+WDEQMA4GA1UEBxMHUG9sYW5jbzEMMAoGA1UEChMDQU1YMRAwDgYDVQQLEwdBTVhH
+QURUMRAwDgYDVQQDEwdBTVhHQURUMRAwDgYDVQQpEwdBTVhHQURUMSUwIwYJKoZI
+hvcNAQkBFhZhbXhnYWR0QGFteGRpZ2l0YWwuY29tggkAtsRgnr70chcwEwYDVR0l
+BAwwCgYIKwYBBQUHAwIwCwYDVR0PBAQDAgeAMA0GCSqGSIb3DQEBBQUAA4ICAQA7
+fhzJ2XDEtf5LKJdRa/HwsrdQU9TnhOrKMfyy00EDhWCrI34/jQKvnwJ0RwpqgiRu
+naO1orRbm7h4b1gITimqykvlplHSJIMo0qW2jpzxA8OS8bCyzxOz/prUtIldYbhv
+vqOBtebC9U4Y/f/gbAm8ZvLsa9SE3RRI/U7MuX/5pT5lAymmuIBpNt/H/rC6bK9U
+3PXRhXbCWry4nHKDrbCF2q5J7mVKRbv6PR18GmvAstE+V+tkkyPl54uTCRB9PHOm
++cpKEFqoNjJzo1oBGqccSXqcfuKFcXQxbPAX2DSNTYaK5n98TM9mNWgzYtbo8/Q0
+WWmB/OfugiVW+L9gA4ye9T2ew9wrN33xl8alHvfkbDA7SjVL/byZGx0zbDXLVga0
+pZK1EyT7ZL9JHpPqOrFYhJLZ32nDWUi4/taEf6xE8tyOgH0p7fsb+jge7DuXrFFP
+Ebqjo6mPA6uMjrTivc5F7Fc3rnnZRiEuO9FJ/r4M193b/jsGJaXc19i78gPgUe/h
+DfGdYTji+Gva4478lqhuymefSYE6eGMwz2etpEJGZ8v9qXF7oSQlYeeM/D18yXCS
+OIJ1l5Cs6vtbYNbox9b9e5U2AReI/Jh81qUjV46zaeOstgjp69r1k50j8LDPZz5r
+6PCm7QBjQba1AxKjId31hLFflR4sQ7wxvBILhDyh2g==
+-----END CERTIFICATE-----

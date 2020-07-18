@@ -1,0 +1,76 @@
+alias NGXSAN1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 201.161.94.199"
+alias ANSSAN1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.143.9"
+alias CCMKSAN1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.143.8"
+alias SATSANNOD1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.143.7"
+alias PFSAMXRO1-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 201.161.69.136"
+alias OTRSAMXGA1-5="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 201.161.69.132"
+alias CCMKBUILD01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 172.26.134.137"
+alias NEXSAN1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.143.10"
+alias NGXAMX1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 201.161.69.133"
+alias JABLABAMX1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.137"
+alias SELSAN1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.143.11"
+alias ANSAMX1-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.141"
+alias GALMASTAMX-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.138"
+alias GALNOD1AMX-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.139"
+alias GALNOD2AMX-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.140"
+alias OKDAMXMAST1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.142"
+alias OKDAMXMAST2-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.143"
+alias OKDAMXMAST3-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.144"
+alias OKDAMXAPP1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.145"
+alias OKDAMXAPP2-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.146"
+alias OKDAMXLB1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.147"
+alias OKDAMXCEPH1-2="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.148"
+alias OKDAMXCEPH2-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.149"
+alias OKDAMXCEPH3-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.150"
+alias OKDAMXCEPH4-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.151"
+alias IPAAMX1-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.23.144.152"
+alias DEVTECHJABLAB="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.26.3"
+alias DEVTECHOKDMAST01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.4"
+alias DEVTECHOKDAPP01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.8"
+alias DEVTECHOKDINFRA01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.9"
+alias DEVTECHOKDLB01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.5"
+alias DEVTECHOKDLOG01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.7"
+alias DEVTECHOKDMETR01-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.6"
+alias DEVTECHOKDAPP02-1="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 10.10.27.10"
+alias KEVOPSJABLAB="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 35.224.22.62"
+alias KEVOPSBUILDER="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 35.231.99.9"
+alias SUBROSA01="ssh -A -o ServerAliveInterval=60 -l kevin.gomez 172.26.88.19"
+
+alias JVPPFS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.130'
+alias JVPSRVS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.3'
+alias JVPSRVS02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.4'
+alias JVPNGNX02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.5'
+alias JVPNGNX01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.6'
+alias JVPMAST01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.131'
+alias JVPMAST02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.132'
+alias JVPMAST03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.133'
+alias JVPINFR01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.134'
+alias JVPINFR02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.135'
+alias JVPINFR03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.136'
+alias JVPAPP01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.137'
+alias JVPAPP02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.138'
+alias JVPAPP03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.139'
+alias JVPAPP04-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.140'
+alias JVPAPP05-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.141'
+alias JVPLOG01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.142'
+alias JVPLOG02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.143'
+alias JVPLOG03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.144'
+alias JVPLB01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.145'
+alias JVPLB02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.146'
+alias JVPNEXS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.147'
+alias JVPGRLG01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.148'
+alias JVPPROS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.149'
+alias JVPPROS02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.150'
+alias JVPMOGD01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.151'
+alias JVPMOGD02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.152'
+alias JVPMOGD03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.153'
+alias JVPCASS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.154'
+alias JVPCASS02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.155'
+alias JVPCASS03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.156'
+alias JVPELAS01-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.157'
+alias JVPELAS02-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.158'
+alias JVPELAS03-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.159'
+alias JVPJVB101-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.160'
+alias JVPJVB102-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.161'
+alias JVPJVB103-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.162'
+alias JVPJVB104-1='ssh -A -o ServerAliveInterval=30 kevin.gomez@172.26.90.163'
