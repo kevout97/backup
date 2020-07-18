@@ -1,0 +1,92 @@
+///////////////////////////////////////////////////////////
+// Call trans opt: received. 2-19-98 13:24:18 REC:Loc    //
+//                                                       //
+//      Trace program: running                           //
+//                                                       //
+//            wake up, Neo...                            //
+//         the matrix has you                            //
+//       follow the white rabbit.                        //
+//                                                       //
+//           knock, knock, Neo.                          //
+//                                                       //
+//                         (`.         ,-,               //
+//                         ` `.    ,;' /                 //
+//                          `.  ,'/ .'                   //
+//                           `. X /.'                    //
+//                 .-;--''--.._` ` (                     //
+//               .'            /   `                     //
+//              ,           ` '   Q '                    //
+//              ,         ,   `._    \                   //
+//           ,.|         '     `-.;_'                    //
+//           :  . `  ;    `  ` --,.._;                   //
+//            ' `    ,   )   .'                          //
+//               `._ ,  '   /_                           //
+//                  ; ,''-,;' ``-                        //
+//                   ``-..__``--`                        //
+///////////////////////////////////////////////////////////
+
+GIT_URL               = "ssh://bitbucket.org/dlaargentina/claro-jitsi-meet.git"
+OKD_API               = "https://172.26.90.131:8443"
+OKD_KEY_API_JITSI     = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJqaXRzaS1jbGFyb2Nvbm5lY3QiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi0yeG5jNSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNzRhZjQyOWEtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmppdHNpLWNsYXJvY29ubmVjdDpqZW5raW5zIn0.R_YHcPOKpZDZzPbpm3j1f1QxKnFWF3qYXJuw-226U4uOsb9duu3neGGQZnG3vF_SuH1newM-hWtEXwVpCveDEJqEH_-ao6VkQcoHxMfWYI3w12kQUEJLukJr7jgIwLFC4n34pP4bn3CaS0G0zECO-L88CmGScUet6xWjeYuvXrqsd5y3KpXnyYdedN72-w6Prw1j2LPhpj57UU6N8RjRVKsr47X_2JUM-22UMlCTZO5Sc3ny-g5BXxASkHYBGjwsOuHgDawlSWOQRC244LCogCvoawM1U98u-9ORdCA2Elqhhspo7hrmpK8Y2EyEHdgeYv58CxeU2oHc2OsMa04yIA'
+OKD_KEY_API_CCMKBUILD = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjY21rYnVpbGQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi1qamw0aiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMzI0M2JmNjAtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNjbWtidWlsZDpqZW5raW5zIn0.sH4V176b8REzPDuzgM47yZWNufbWYqiNuXBwPTTu6VAvzYaMMDOYaQMxYknBWPl0GyzROEw05jQkBU6VnywcGzaldWMN4unm_2bupW6I22JFaRgpEkIKMeiBlCjelRRsAOpcp44RGlLR2ti9s6_ps-j7xToyKTsmmuKzBmWHDMdFXVkNctXhO3NU0P4B5blCHKU4-g8cU5meJpcAGwSoCXi8vYWWXPkkqhwIkgtZ5ugHa-62zkWnK2fB-LUZzg25FkYmpHly1EujceEUyLLoK9lwnsSvzoGbisQ98ZkoKl9eDGBVuCvbwkIYx-8Px6_fQ1NfCdsWr3dinD0-Vwfx0A'
+REMOTE_RO_REGISTRY  = "docker-source-registry.amxdigital.net"
+REMOTE_RO_REGISTRY_SECRET = "registry-amx"
+
+// Build image Jicofo
+node("jenkins-ccmkbuild"){
+    def buildConfigTemplateJvb = [
+        "apiVersion": "v1",
+        "kind": "BuildConfig",
+        "metadata":[
+            "name": "${env.BUILD_TAG}"
+        ],
+        "spec":[
+            "source":[
+                "type": "Binary"
+            ],
+            "output":[
+                "to":[
+                    "kind": "DockerImage",
+                    "name": "${REMOTE_RO_REGISTRY}/${env.JOB_NAME}:v${env.BUILD_NUMBER}"
+                ],
+                "pushSecret":[
+                    "name": "${REMOTE_RO_REGISTRY_SECRET}"
+                ]
+            ],
+            "strategy": [
+                "type": "Docker"
+            ]
+        ]
+    ]
+    
+    stage("Prepare build"){
+        //Create Dockerfile for Jvb
+        sh """#!/bin/bash -x
+            cat<<-EOF > Dockerfile
+FROM docker.io/jitsi/jvb:stable-4548
+
+RUN mkdir -p /etc/cont-init.d/ && \
+    mkdir -p /etc/jitsi/jvb/ && \
+    echo "IyEvdXNyL2Jpbi93aXRoLWNvbnRlbnYgYmFzaAoKc2VydmljZSBqaXRzaS12aWRlb2JyaWRnZTIgcmVzdGFydA==" | base64 -w0 -d > /etc/cont-init.d/10-config
+
+EOF
+        """
+
+        // BuildConfig to Jvb
+        openshift.withCluster("${OKD_API}","${OKD_KEY_API_CCMKBUILD}"){
+            openshift.withProject("ccmkbuild"){
+                openshift.apply(buildConfigTemplateJvb)
+            }
+        }
+    }
+
+    // Build image
+    stage("Building image"){
+        sh "oc start-build ${env.BUILD_TAG} --from-dir . --follow"
+    }
+
+    // Clean objects
+    stage("Clean Object"){
+        sh "oc delete bc ${env.BUILD_TAG}"
+    }
+}

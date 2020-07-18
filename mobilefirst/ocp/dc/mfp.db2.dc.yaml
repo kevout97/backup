@@ -1,0 +1,43 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: mfp-db2-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mfp-db2
+    spec:
+      containers:
+      - name: mfp-db2
+        image: dockeregistry.amovildigitalops.com/rhel68db2105:v2.0
+        imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+        command:
+          - /root/entrypoint.sh
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 50000
+          name: db2
+        env:
+        - name: instuser
+          valueFrom:
+            secretKeyRef:
+              name: mfp-db2-sc
+              key: MFP_DB2_USER
+        - name: instpasswd
+          valueFrom:
+            secretKeyRef:
+              name: mfp-db2-sc
+              key: MFP_DB2_PASSWORD
+        - name: instport
+          value: "50000"
+        volumeMounts:
+          - name: mfp-db2-volume
+            mountPath: /home/
+      volumes:
+      - name: mfp-db2-volume
+        persistentVolumeClaim:
+          claimName: mfp-db2-pvc

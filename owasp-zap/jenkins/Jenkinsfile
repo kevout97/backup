@@ -1,0 +1,114 @@
+// Pipeline to Zaproxy test
+
+ZAPROXY_HOST = "https://zap.san.gadt.amxdigital.net"
+ZAPROXY_EXTERNAL_API_HOST = "https://alpha-ciclope.dev.mavericksgateway.net"
+ZAPROXY_ENDPOINTS_FILE = "/opt/owasp-zaproxy/files/endpoints.txt"
+ZAPROXY_OPENAPI_FILE = "/opt/owasp-zaproxy/files/t1pagos_openapi_alpha_v1.yaml"
+ZAPROXY_AUTHORIZATION_TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImNkMGI3M2RjNmViNTQyOGM5YThhMTA4YmE5YjBjZTlkOWFjMGZiMmMzNTFmZWZhZmQyMTg3MzkwZjFkZmZkNDIxNDJmMmNhY2U2NzA5ZTAwIn0.eyJhdWQiOiIxIiwianRpIjoiY2QwYjczZGM2ZWI1NDI4YzlhOGExMDhiYTliMGNlOWQ5YWMwZmIyYzM1MWZlZmFmZDIxODczOTBmMWRmZmQ0MjE0MmYyY2FjZTY3MDllMDAiLCJpYXQiOjE1NDc2ODk0NTgsIm5iZiI6MTU0NzY4OTQ1OCwiZXhwIjoxODYzMzA4NjU4LCJzdWIiOiIxIiwic2NvcGVzIjpbInN1cGVyYWRtaW4iXX0.XSusw7tyx8LO7L_fp_7xdNFIxJGII0pNz1BU2cCRC_wSDVYmRvKotzsEcotSlnWonPMLXp3oc9AiSEtYAWF6l6YGBV805GMxK62BP32G1t13xglRu8BB4ZLpmfwmvR1UzJjGl-GCs1_vI7mHN8WCkroXYewkCGTWiqPzp1AeYacfHe0rK9Toy7cpjwN3NVFnYBWt-9Qnb0UPSSe-ZN0-wlNUxcxcWZYtNX0BoDHUzNv3F6m0_t5wPVkcWXvDe7c5mBaxLDOrvxxoH51PN8kjwstf3vv661gK9bJpz-jUlvZzPvrxDJXis6UuKpwDMPRQ27mx0ALQsK05URKHcutirFYvcsUiKrqQLSuaQniqVt5FV_-BHfyOsS5zVQFNyuA2u-uII7MND7yyr-I86fmq7YbSSejLlcv2KwUGr7CwSn12pIc9ai7dPba9fl37SNV1sUiDOX5peQ7l6wB-Y9qwLYvodDIEDyfKoAydaQeNjVgaEiFfwDXzCUUsm62m3AjEwNwc3fCZ4s6in_9quDzdI11mHbzsYQJraFStrvBXnwAKaIl9yLC8juhovhoB_lKcv08rxAhoGYWLLaROb5eUbrhziNAA8UoXsNPf0_CHEAk61lIplaBXgMmHQOA_PTfTouqe-qmLS6rgC58nGQLbewdNHRN1qNf3z1zJukiQllI"
+
+node("main_node"){
+def EVIDENCE_DIRECTORY = "${env.WORKSPACE}" // Directorio para guardar el reporte y los mensajes generados
+def RESPONSE_CLEAN_ALERTS
+def RESPONSE_CLEAN_MESSAGES
+def RESPONSE_CLEAN_HEADER_AUTHORIZATION
+def RESPONSE_HEADER_AUTHORIZATION
+def RESPONSE_ENDPOINT
+def RESPONSE_OPENAPI
+
+    stage("Clean All Messages"){
+        RESPONSE_CLEAN_ALERTS = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/action/deleteAllAlerts/?'
+            """, returnStdout: true)
+        echo "Response Clean Alerts: ${RESPONSE_CLEAN_ALERTS}"
+
+        RESPONSE_CLEAN_MESSAGES = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/core/action/deleteSiteNode/?url=${ZAPROXY_EXTERNAL_API_HOST}&method=&postData='
+            """, returnStdout: true)
+        echo "Response Clean Messages: ${RESPONSE_CLEAN_MESSAGES}"
+    }
+
+    stage("Set Configuration Zaproxy)"){
+        echo "Set Header Authorization"
+        RESPONSE_HEADER_AUTHORIZATION = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/replacer/action/addRule/?description=${env.BUILD_TAG}&enabled=true&matchType=REQ_HEADER&matchRegex=false&matchString=Authorization&replacement=${ZAPROXY_AUTHORIZATION_TOKEN}&initiators='
+            """, returnStdout: true)
+        echo "Response Header Authorization: ${RESPONSE_HEADER_AUTHORIZATION}"
+
+        echo "Set Endpoints"
+        RESPONSE_ENDPOINT = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/importurls/action/importurls/?filePath=${ZAPROXY_ENDPOINTS_FILE}'
+            """, returnStdout: true)
+        echo "Response Endpoints: ${RESPONSE_ENDPOINT}"
+
+        echo "Set OpenApi"
+        RESPONSE_OPENAPI = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/openapi/action/importFile/?file=${ZAPROXY_OPENAPI_FILE}&target='
+            """, returnStdout: true)
+        echo "Response OpenApi: ${RESPONSE_OPENAPI}"
+
+        sh """
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/core/view/messages/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}&start=&count=' > ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.messages
+            cat ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.messages | python -m json.tool > ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.messages.json
+            rm -f ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.messages
+        """
+
+        sh """
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/view/alerts/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}&start=&count=&riskId=' > ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.alerts
+            cat ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.alerts | python -m json.tool > ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.alerts.json
+            rm -f ${EVIDENCE_DIRECTORY}/${env.BUILD_TAG}.alerts
+        """
+
+        if( RESPONSE_OPENAPI.substring(RESPONSE_OPENAPI.indexOf('"') + 1,RESPONSE_OPENAPI.indexOf('":')) != "importFile"){
+            error('There was ocurring error when was configuring Zaproxy')
+            currentBuild.result = 'FAILURE'
+        }
+
+        RESPONSE_CLEAN_HEADER_AUTHORIZATION = sh(script:"""
+            curl -s -X GET '${ZAPROXY_HOST}/JSON/replacer/action/removeRule/?description=${env.BUILD_TAG}'
+            """, returnStdout: true)
+        echo "Response Clean Headers: ${RESPONSE_CLEAN_HEADER_AUTHORIZATION}"
+    }
+
+def ALERTS_INFORMATIONAL
+def ALERTS_HIGH
+def ALERTS_LOW
+def ALERTS_MEDIUM
+    try{
+        stage("VoBo Zaproxy"){
+            ALERTS_INFORMATIONAL = sh(script:"""
+                curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/view/alertsSummary/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}' | grep -o -E '"Informational":[0-9]+' | awk -F: '{print \$2}'
+                """, returnStdout: true)
+            
+            echo "Total Informational Alerts: ${ALERTS_INFORMATIONAL}"
+            
+            ALERTS_HIGH = sh(script:"""
+                curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/view/alertsSummary/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}' | grep -o -E '"High":[0-9]+' | awk -F: '{print \$2}'
+                """, returnStdout: true)
+
+            echo "Total High Alerts: ${ALERTS_HIGH}"
+            
+            ALERTS_LOW = sh(script:"""
+                curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/view/alertsSummary/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}' | grep -o -E '"Low":[0-9]+' | awk -F: '{print \$2}'
+                """, returnStdout: true)
+            
+            echo "Total Low Alerts: ${ALERTS_LOW}"
+            
+            ALERTS_MEDIUM = sh(script:"""
+                curl -s -X GET '${ZAPROXY_HOST}/JSON/alert/view/alertsSummary/?baseurl=${ZAPROXY_EXTERNAL_API_HOST}' | grep -o -E '"Medium":[0-9]+' | awk -F: '{print \$2}'
+                """, returnStdout: true)
+            
+            echo "Total Medium Alerts: ${ALERTS_MEDIUM}"
+            
+            if( ALERTS_INFORMATIONAL.toInteger() > 0 || ALERTS_HIGH.toInteger() > 0 || ALERTS_LOW.toInteger() > 0 || ALERTS_MEDIUM.toInteger() > 0 ){
+                userInput = input(message: "There are some alerts. Do you want continue?", ok: "Continue")
+            }
+        }
+
+        stage("Continue Job"){
+            echo "Continue Job"
+        }
+    }catch(err){
+        currentBuild.result = 'ABORTED'
+        error('The job was aborted')
+    }
+}

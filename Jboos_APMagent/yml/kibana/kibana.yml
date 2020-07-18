@@ -1,0 +1,5 @@
+# =================== kibana: kibana.yml ====================== #
+#kibana configuration from kibana-docker.
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: ["http://elasticsearch:9200"]

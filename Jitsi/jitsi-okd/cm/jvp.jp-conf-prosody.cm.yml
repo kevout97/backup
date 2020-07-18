@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-jp-conf-prosody-cm
+data: 
+  JICOFO_AUTH_DOMAIN: "auth.claroconnect.com"
+  JICOFO_JVB_USER: "jvb"
+  JICOFO_FOCUS_USER: "focus"

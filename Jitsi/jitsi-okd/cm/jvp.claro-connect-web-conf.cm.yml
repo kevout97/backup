@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-claro-web-conf-cm
+data: 
+  claro-web.conf: |
+    server {
+        listen   80 default;
+        server_name claro-connect-web;
+        location / {
+          root /var/www/sites/$host/build;
+          index index.html index.html;
+          
+        }
+    }

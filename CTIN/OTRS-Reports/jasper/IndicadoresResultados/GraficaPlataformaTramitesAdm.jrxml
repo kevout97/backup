@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GraficaClaroPagos" pageWidth="760" pageHeight="780" orientation="Landscape" columnWidth="760" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Error" uuid="d200029b-b439-4b3e-a0cb-d45831410d28">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[SELECT gerencia, 
+       sum(estado_open) as "open",
+       sum(estado_pending_reminder) as pending_reminder,
+       sum(estado_Awaiting_Scheduled_Time) as Awaiting_Scheduled_Time,
+       sum(estado_L1_follow_up_pending_reminder) as L1_follow_up_pending_reminder,
+       sum(estado_Queued_L2) as Queued_L2
+       FROM gerencias_estados, propuestas_queues 
+       WHERE gerencias_estados.idGerencia in (5,8,15,16,20,21,22,23) AND
+       gerencias_estados.idGerencia = propuestas_queues.idGerencia
+       GROUP BY 1]]>
+	</queryString>
+	<field name="gerencia" class="java.lang.String"/>
+	<field name="new" class="java.lang.Integer"/>
+	<field name="closed_successful" class="java.lang.Integer"/>
+	<field name="closed_unsuccessful" class="java.lang.Integer"/>
+	<field name="open" class="java.lang.Integer"/>
+	<field name="removed" class="java.lang.Integer"/>
+	<field name="pending_reminder" class="java.lang.Integer"/>
+	<field name="pending_auto_close_mas" class="java.lang.Integer"/>
+	<field name="pending_auto_close_menos" class="java.lang.Integer"/>
+	<field name="merged" class="java.lang.Integer"/>
+	<field name="closed_with_workaround" class="java.lang.Integer"/>
+	<field name="Awaiting_Scheduled_Time" class="java.lang.Integer"/>
+	<field name="Awaiting_Precedent_Requirement" class="java.lang.Integer"/>
+	<field name="open_L2" class="java.lang.Integer"/>
+	<field name="open_L3" class="java.lang.Integer"/>
+	<field name="L1_follow_up" class="java.lang.Integer"/>
+	<field name="L1_follow_up_pending_reminder" class="java.lang.Integer"/>
+	<field name="closed_without_validation" class="java.lang.Integer"/>
+	<field name="closed_invalid_request" class="java.lang.Integer"/>
+	<field name="Awaiting_for_missing_information" class="java.lang.Integer"/>
+	<field name="impact_analysis" class="java.lang.Integer"/>
+	<field name="application_for_team_leader_approval" class="java.lang.Integer"/>
+	<field name="application_for_business_risk_approval" class="java.lang.Integer"/>
+	<field name="Queued_L2" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="281">
+			<stackedBar3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="760" height="280" uuid="4e5d98d4-ee01-4bb2-8848-99c6d4ea61de">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Queued L2"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{gerencia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Queued_L2}]]></valueExpression>
+						<labelExpression><![CDATA[""+$F{Queued_L2}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["L1 follow up pending reminder"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{gerencia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{L1_follow_up_pending_reminder}]]></valueExpression>
+						<labelExpression><![CDATA[""+$F{L1_follow_up_pending_reminder}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Awaiting Scheduled Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{gerencia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Awaiting_Scheduled_Time}]]></valueExpression>
+						<labelExpression><![CDATA[""+$F{Awaiting_Scheduled_Time}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["pending reminder"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{gerencia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{pending_reminder}]]></valueExpression>
+						<labelExpression><![CDATA[""+$F{pending_reminder}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["open"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{gerencia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{open}]]></valueExpression>
+						<labelExpression><![CDATA[""+$F{open}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot isShowLabels="true">
+					<plot orientation="Horizontal"/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="8"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</stackedBar3DChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,13 @@
+# Los valores deben estar en base64
+# Eg. echo -n "texto" | base64 -w0
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mfp-sc
+data:
+  MFPF_USER: YW14Z2E=
+  MFPF_USER_PASSWORD: YWJjZDEyMzQ=
+  MFPF_ADMIN_USER: bWZwYWRtaW4=
+  MFPF_ADMIN_USER_PASSWORD: YWJjZDEyMzQ1
+  ANALYTICS_ADMIN_USER: bWZwYW5hbHl0aWNz
+  ANALYTICS_ADMIN_PASSWORD: YWJjZDEyMzQ=

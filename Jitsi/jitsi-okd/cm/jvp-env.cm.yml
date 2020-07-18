@@ -1,0 +1,147 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-php-env-cm
+data: 
+  .env: |
+    APP_ENV=local
+    APP_DEBUG=true
+    APP_KEY=
+    APP_TIMEZONE=UTC
+
+    DB_CONNECTION=mongodb
+    DB_HOST=172.26.90.151
+    DB_PORT=27017
+    DB_DATABASE=jitsiiam
+    DB_USERNAME=jitsi-user
+    DB_PASSWORD=cdsGN9Bd9CnCQ49mDL
+
+    #DB_CONNECTION=mysql
+    #DB_HOST=127.0.0.1
+    #DB_PORT=3306
+    #DB_DATABASE=jitsiiam
+    #DB_USERNAME=iam
+    #DB_PASSWORD=iam
+
+    #DB_CONNECTION=oracle
+    #DB_HOST=ott-amxmexico-test-oracle-1647413693.us-west-1.elb.amazonaws.com
+    #DB_PORT=1521
+    #DB_DATABASE=jitsiiamp
+    #DB_USERNAME=iamadmin
+    #DB_PASSWORD=iamadmin123
+
+
+    CACHE_DRIVER=redis
+    QUEUE_DRIVER=sync
+
+    ENDPOINT_CLARO_VIDEO=https://mfwkweb-api.clarovideo.net
+    #ENDPOINT_BACKEND_USERS=https://mfwkweb-api-test.clarovideo.net
+    ENDPOINT_BACKEND_USERS=http://qro-microfwk-silo-resto.clarovideo.net
+    ENDPOINT_CLARO_MUSICA=http://www.claromusica.com/api
+    ENDPOINT_CLARO_SYNC=https://microfwk-mw.clarodrive.com
+    ENDPOINT_ZTE_CONFERENCE=http://34.232.149.53:8090/
+    ENDPOINT_ZTE_CONFERENCE_CAPABILITY=http://35.172.36.248:8080
+    ENDPOINT_XMPP_CONFERENCE=https://local.claroconnect.com
+
+    DEVICE_REGISTER_DOMAIN_WEB=ott.amx
+    DEVICE_REGISTER_DOMAIN_APP=js.ott.amxmexico.com
+    DEVICE_REGISTER_DOMAIN_PC=js.pc.ims.mnc000.mcc460.3gppnetwork.org
+
+    #ENDPOINT_ZTE_CONFERENCE=https://confdb.claroconnect.com:8091/
+
+    JWT_KEY=p7aceWumUV2bAcRuguPH
+    JWT_ALGORITHM=HS256
+
+    REDIS_HOST=jvpo1redmast01-svc.jitsi-redis.svc
+    REDIS_PORT=6379
+    REDIS_PASSWORD=up]o7jahk9ju9ba3aesh
+
+    ENDPOINT_BOSS_AGENT_WSDL=BossAgent.wsdl
+    ENDPOINT_BOSS_AGEeNT_WSDL_TYPE=URI
+    ENDPOINT_BOSS_AGENT_USER=root
+    ENDPOINT_BOSS_AGENT_PASSWORD=root
+
+    WEBSOCKET_PORT=8090
+
+    API_USERNAME=amco
+    API_PASSWORD=claro
+    AES_KEY=c(5\Gm9&Ufb\Z;(R@y8\,Nx?+n32>@3;
+
+    WS_EXP_QR_SECONDS=25
+    WS_EXP_AUTH_SECONDS=31536000
+    WS_DEVICE_TOKEN_LENGTH=50
+    WS_QR_CODE_LENGTH=50
+
+    MAIL_DRIVER=mail
+    MAIL_HOST=127.0.0.1
+    MAIL_PORT=
+    MAIL_USER=
+    #MAIL_PASSWORD=xvxntcimuyxsrhkc
+    MAIL_PASSWORD=
+    MAIL_ENCRIPTION='PLAIN'
+    MAIL_FROM_ADDRESS=no-reply@gmail.com
+    MAIL_FROM_NAME='Join Talks'
+
+    VIRTUAL_NUMBER_PREFIX=999
+    VIRTUAL_NUMBER_LENGTH=9
+    VIRTUAL_NUMBER_PREFIX_ODIN=998
+    VIRTUAL_NUMBER_LENGTH_ODIN=9
+
+    FORGOT_PASSWORD_EXPIRATION_TIME=3600
+
+    PORTAL_URL=https://beta.claroconnect.com
+
+    APP_GEN_ADDRESS=app.claroconnect.com
+
+    CUSTOM_PROTOCOL=amxccb
+
+    USER_BACKEND=App\Drivers\Business\ClaroUserBackend
+    AUTH_BACKEND=App\Drivers\Business\ClaroAuthBackend
+
+    # Configuration for engagement service
+    ENGAGEMENT_CLASS_MAILER=App\Mail\EngagementMailer
+    ENGAGEMENT_SERVER_URI=http://engagement.clarovideo.net
+    ENGAGEMENT_AUTHPN=M41L3R
+    ENGAGEMENT_AUTHPT=L03LL7
+    ENGAGEMENT_SERVICE=CLAROCONNECT
+    ENGAGEMENT_IS_TEST=false
+    ENGAGEMENT_STRING_TEST=dlaqatest
+    ENGAGEMENT_DRYRUN=false
+    ENGAGEMENT_TEMPLATES_DISABLED=null
+    ENGAGEMENT_PREFIX=cc-
+
+    OCI_ENABLED=false
+
+    SUBDOMAIN_PREFIX=/iam
+    BOSH_SECRET=Xsecret01X
+    BOSH_DOMAIN=claroconnect.com
+    BOSH_SUBDOMAIN=
+
+    COOKIE_DOMAIN=.claroconnect.com
+    FRONTEND_DOMAIN=https://beta.claroconnect.com
+
+
+    ### Google
+    ### ----------------------------------------- ###
+
+    EXTERNAL_CALENDAR_GC_CLIENT_ID=86057329456-vm89ue5cd2jsbv2h1cqjl2kl2dmo896b.apps.googleusercontent.com
+    EXTERNAL_CALENDAR_GC_CLIENT_SECRET=yON0e4SXFelIm3t6rjc7d1D_
+    EXTERNAL_CALENDAR_GC_PROJECT_ID=estudiantil-1536541072915
+    EXTERNAL_CALENDAR_GC_REDIRECT_URI=https://front.claroconnect.com/iam/management/profile
+    EXTERNAL_CALENDAR_GC_REDIRECT_URI_WEB=postmessage
+    EXTERNAL_CALENDAR_GC_REDIRECT_URI_DESKTOP=https://front.claroconnect.com/iam/oauth/google/desktop
+
+
+    ### Microsoft
+    ### ----------------------------------------- ###
+
+    EXTERNAL_CALENDAR_MS_CLIENT_ID=eeedda1d-7ed1-4991-8b9b-9439dfa37d52
+    EXTERNAL_CALENDAR_MS_CLIENT_SECRET=5NZzeO9.T_.wxZ3vV93n1ME~UrDwE43bvZ
+    EXTERNAL_CALENDAR_MS_REDIRECT_URI=https://front.claroconnect.com/iam/management/profile
+    EXTERNAL_CALENDAR_MS_REDIRECT_URI_WEB=https://front.claroconnect.com/iam/oauth/ms/client.html
+    EXTERNAL_CALENDAR_MS_AUTHORIZE_URL=https://login.microsoftonline.com/common
+    EXTERNAL_CALENDAR_MS_AUTHORIZE_ENDPOINT=/oauth2/v2.0/authorize
+    EXTERNAL_CALENDAR_MS_TOKEN_ENDPOINT=/oauth2/v2.0/token
+    EXTERNAL_CALENDAR_MS_SCOPES="openid profile offline_access calendars.readwrite email user.read"
+    EXTERNAL_CALENDAR_MS_PROMPT=select_account
+

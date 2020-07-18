@@ -1,0 +1,9 @@
+# Los valores deben estar en base64
+# Eg. echo -n "texto" | base64 -w0
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mfp-db2-sc
+data:
+  MFP_DB2_USER: ZGIyYW14
+  MFP_DB2_PASSWORD: bWlwYXNzd29yZG11eXNlY3JldG8=

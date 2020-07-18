@@ -1,0 +1,28 @@
+# Playbook para realizar backup de OKD
+## Esto solo aplica para los servidores que pertenecen al cluster de OKD, no se toma
+## en cuenta los servidores para Ceph
+- hosts: okd
+  become: yes
+  become_user: root
+  tasks:
+  - name: "Copiando script para backup"
+    copy:
+      src: ../scripts/backup_okd.sh
+      dest: /tmp/backup_okd.sh
+      owner: root
+      group: root
+      mode: u=rwx,g=rx,o=rx
+  
+  - name: "Creando directorio para el backup"
+    file:
+      path: "{{ okd_backup_directory }}"
+      state: directory
+      mode: '0755'
+  
+  - name: "Creando backup"
+    shell: /tmp/backup_okd.sh "{{ okd_backup_directory }}"
+  
+  - name: "Borrando script para backup"
+    file:
+      path: /tmp/backup_okd.sh
+      state: absent

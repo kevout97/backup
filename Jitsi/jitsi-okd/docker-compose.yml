@@ -1,0 +1,126 @@
+version: "3"
+services:
+
+  ## JOIN TALKS BACKEND
+  ## --------------------------------------------- ##
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-iam
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+      - redis
+    ports:
+        - "9000:9000"
+    volumes:
+      - ./:/var/www/iam
+    networks:
+      - internal_net
+  db:
+    image: mongo:4.2
+    container_name: db-iam
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+      MONGO_INITDB_DATABASE: iam
+    ports:
+        - "27017:27017"
+    volumes:
+        - ./volumes/mongo-volume:/data/db
+    networks:
+      - internal_net
+
+  redis:
+    image: redis
+    container_name: redis-iam
+    ports:
+      - "6379:6379"
+    networks:
+      - internal_net
+
+  ## JOIN TALKS FRONTEND
+  ## --------------------------------------------- ##
+
+  web:
+    image: nginx:latest
+    container_name: server-iam
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Repositories
+      - ./:/var/www/iam
+      - ../claro-connect-web:/var/www/claro-connect-web
+      - ../claro-connect-iam-front:/var/www/claro-connect-iam-front
+      - ../claro-jitsi-meet:/var/www/claro-jitsi-meet
+      # Virtual hosts
+      - ./docker/iam.conf:/etc/nginx/conf.d/iam.conf
+      - ./docker/front.conf:/etc/nginx/conf.d/front.conf
+      - ./docker/theme.conf:/etc/nginx/includes.d/theme.conf
+      - ./docker/theme-jitsi.conf:/etc/nginx/includes.d/theme-jitsi.conf
+      # SSL keys
+      - ./docker/jitsi.claroconnect.com.pem:/usr/share/jitsi.claroconnect.com.pem
+      - ./docker/jitsi.claroconnect.com.key:/usr/share/jitsi.claroconnect.com.key
+    networks:
+        internal_net:
+            aliases:
+              - local.claroconnect.com
+              - front.claroconnect.com
+
+  ## JITSI COMPONENTS
+  ## --------------------------------------------- ##
+
+  # Prosody & Jicofo
+  prosody:
+    build:
+      context: docker/jitsi-meet/prosody/
+      dockerfile: Dockerfile
+    container_name: prosody-iam
+    expose:
+      - '5222'
+      - '5347'
+      - '5280'
+    volumes:
+     # Prosody config
+     - ./docker/jitsi-meet/prosody/config/prosody.cfg.lua:/etc/prosody/prosody.cfg.lua
+     - ./docker/jitsi-meet/prosody/config/claroconnect.com.cfg.lua:/etc/prosody/conf.d/claroconnect.com.cfg.lua
+     # SSL keys
+     - ./docker/jitsi.claroconnect.com.pem:/etc/prosody/certs/jitsi.claroconnect.com.pem
+     - ./docker/jitsi.claroconnect.com.key:/etc/prosody/certs/jitsi.claroconnect.com.key
+     # Prosody plugins
+     - ../claro-jitsi-meet:/usr/share/claro-jitsi-meet
+     # Jicofo configuration
+     - ./docker/jitsi-meet/prosody/config/sip-communicator.properties:/etc/jitsi/jicofo/sip-communicator.properties
+     - ./docker/jitsi-meet/prosody/config/config:/etc/jitsi/jicofo/config
+    networks:
+        internal_net:
+            aliases:
+              - bosh.claroconnect.com
+              - auth.claroconnect.com
+              - internal.auth.claroconnect.com
+              - claroconnect.com
+  # Videobridge instances
+  jvb0:
+        build:
+            context: ./docker/jitsi-meet/jvb/
+            dockerfile: Dockerfile
+        container_name: jvb0-iam
+        volumes:
+           # Videobridge config
+           - ./docker/jitsi-meet/jvb/config/sip-communicator.properties:/etc/jitsi/videobridge/sip-communicator.properties
+           - ./docker/jitsi-meet/jvb/config/config:/etc/jitsi/videobridge/config
+           # SSL keys
+           - ./docker/jitsi.claroconnect.com.pem:/usr/share/jitsi.claroconnect.com.pem
+           - ./docker/jitsi.claroconnect.com.key:/usr/share/jitsi.claroconnect.com.key
+        networks:
+          - internal_net
+
+networks:
+  internal_net:

@@ -1,0 +1,95 @@
+sudo su ansible
+cd ~/openshift-ansible/playbooks
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-checks/pre-install.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-master/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-node/join.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-monitoring/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-console/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-metrics/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-logging/config.yml & #--> fallo
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-service-catalog/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-management/config.yml & --> fallo dice que requiere nfs
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-descheduler/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-node-problem-detector/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv openshift-autoheal/config.yml &
+
+nohup ansible-playbook -i /opt/okd/playbooks/0.inventory -vvvv olm/config.yml &
+
+
+oc create clusterrolebinding amx-users --clusterrole=cluster-admin --user=kevin.gomez
+
+htpasswd_identity
+
+HTPasswdPasswordIdentityProvider
+
+file: /etc/origin/master/.htpasswd
+
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n default
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n kube-public
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n kube-service-catalog
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n kube-system
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n management-infra
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-console
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-infra
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-logging
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-metrics-server
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-monitoring
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-node
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-node-problem-detector
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-operator-lifecycle-manager
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-sdn
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n openshift-web-console
+oc adm policy add-role-to-user cluster-admin kevin.gomez -n operator-lifecycle-manager
+
+172.30.196.125
+
+default
+kube-public
+kube-service-catalog
+kube-system
+management-infra
+openshift
+openshift-console
+openshift-infra
+openshift-logging
+openshift-metrics-server
+openshift-monitoring
+openshift-node
+openshift-node-problem-detector
+openshift-operator-lifecycle-manager
+openshift-sdn
+openshift-web-console
+operator-lifecycle-manager
+
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n default
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n kube-public
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n kube-service-catalog
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n kube-system
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n management-infra
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-console
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-infra
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-logging
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-metrics-server
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-monitoring
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-node
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-node-problem-detector
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-operator-lifecycle-manager
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-sdn
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n openshift-web-console
+oc adm policy add-role-to-user cluster-admin mauricio.melendez -n operator-lifecycle-manager
+
+
+ceph osd pool create kube 128

@@ -1,0 +1,122 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: mfp-farm1-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mfp-farm1
+    spec:
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "mfp.apps.okd.amx.gadt.amxdigital.net"
+      containers:
+      - name: mfp
+        image: dockeregistry.amovildigitalops.com/rhel7-atomic-mfpserverfarm
+        imagePullPolicy: IfNotPresent
+        restartPolicy: Always
+        ports:
+        - containerPort: 80
+          name: "mfp-http"
+        - containerPort: 443
+          name: "mfp-https"
+        env:
+        - name: IP_ADDRESS
+          value: "mfp-farm1-svc.mfp.svc"
+        - name: MFPF_SERVER_ID
+          value: "mfp-farm1"
+        - name: MFPF_SERVER_HTTPPORT
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_SERVER_HTTPPORT
+        - name: MFPF_SERVER_HTTPSPORT
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_SERVER_HTTPSPORT
+        - name: MFPF_CLUSTER_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_CLUSTER_MODE
+        - name: MFPF_DB2_SERVER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_DB2_SERVER_NAME
+        - name: MFPF_DB2_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_DB2_PORT
+        - name: MFPF_DB2_DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: MFPF_DB2_DATABASE_NAME
+        - name: MFPF_DB2_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mfp-db2-sc
+              key: MFP_DB2_USER
+        - name: MFPF_DB2_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mfp-db2-sc
+              key: MFP_DB2_PASSWORD
+        - name: MFPF_USER
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: MFPF_USER
+        - name: MFPF_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: MFPF_USER_PASSWORD
+        - name: MFPF_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: MFPF_ADMIN_USER
+        - name: MFPF_ADMIN_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: MFPF_ADMIN_USER_PASSWORD
+        - name: ANALYTICS_ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: ANALYTICS_ADMIN_USER
+        - name: ANALYTICS_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mfp-sc
+              key: ANALYTICS_ADMIN_PASSWORD
+        - name: ANALYTICS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: mfp-cm
+              key: ANALYTICS_URL
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: mfp-farm1-volume
+            mountPath: /opt/ibm/wlp/usr/servers/
+          - name: mfp-certs
+            mountPath: /opt/ibm/wlp/usr/certs/
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: mfp-certs
+          configMap:
+            name: mfp-cert-cm
+        - name: mfp-farm1-volume
+          persistentVolumeClaim:
+            claimName: mfp-farm1-pvc

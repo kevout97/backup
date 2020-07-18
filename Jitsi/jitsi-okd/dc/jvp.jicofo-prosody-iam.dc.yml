@@ -1,0 +1,138 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-jp-iam-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-jp-iam
+    spec:
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "claroconnect.com"
+        - "auth.claroconnect.com"
+        - "bosh.claroconnect.com"
+        - "internal.auth.claroconnect.com"
+      containers:
+      - name: jitsi-prosody-iam
+        image: docker-source-registry.amxdigital.net/jitsi-jp-prosody
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5222
+          name: "jicofo-iam-5222"
+        - containerPort: 5347
+          name: "jicofo-iam-5347"
+        - containerPort: 5280
+          name: "jicofo-iam-5280"
+        env:
+        - name: JICOFO_AUTH_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-prosody-cm
+              key: JICOFO_AUTH_DOMAIN
+        - name: JICOFO_JVB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-prosody-cm
+              key: JICOFO_JVB_USER
+        - name: JICOFO_FOCUS_USER
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-prosody-cm
+              key: JICOFO_FOCUS_USER
+        - name: JICOFO_FOCUS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jvp-jp-pass-sc
+              key: JICOFO_FOCUS_PASSWORD
+        - name: JICOFO_JVB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jvp-jp-pass-sc
+              key: JICOFO_JVB_PASSWORD
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: server-iam-config-js
+            mountPath: /usr/share/claro-jitsi-meet/config.js
+            subPath: config.js
+          - name: claroconnect-com-cfg-lua
+            mountPath: /etc/prosody/conf.d/claroconnect.com.cfg.lua
+            subPath: claroconnect.com.cfg.lua
+          - name: jvp-certificate-pem
+            mountPath: /etc/prosody/certs/jitsi.claroconnect.com.pem
+            subPath: jitsi.claroconnect.com.pem
+            mode: 511
+          - name: jvp-certificate-key
+            mountPath: /etc/prosody/certs/jitsi.claroconnect.com.key
+            subPath: jitsi.claroconnect.com.key
+            mode: 511
+      - name: jitsi-jicofo-iam
+        image: docker-source-registry.amxdigital.net/jitsi-jp-jicofo
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+        env:
+        - name: JICOFO_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_HOST
+        - name: JICOFO_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_HOSTNAME
+        - name: JICOFO_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_PORT
+        - name: JICOFO_AUTH_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_AUTH_DOMAIN
+        - name: JICOFO_AUTH_USER
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_AUTH_USER
+        - name: JICOFO_BRIDGE_MUC
+          valueFrom:
+            configMapKeyRef:
+              name: jvp-jp-conf-jicofo-cm
+              key: JICOFO_BRIDGE_MUC
+        - name: JICOFO_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jvp-jp-pass-sc
+              key: JICOFO_SECRET
+        - name: JICOFO_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jvp-jp-pass-sc
+              key: JICOFO_AUTH_PASSWORD
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: claroconnect-com-cfg-lua
+          configMap:
+            name: jvp-jp-iam-cc-cfg-lua-cm
+        - name: jvp-certificate-pem
+          configMap:
+            name: jvp-certificate-pem-cm
+        - name: jvp-certificate-key
+          configMap:
+            name: jvp-certificate-key-cm
+        - name: server-iam-config-js
+          configMap:
+            name: jvp-php-conf-js-cm
+        - name: jvp-jp-pass-sc
+          secret:
+            secretName: jvp-jp-pass-sc

@@ -1,0 +1,334 @@
+///////////////////////////////////////////////////////////
+// Call trans opt: received. 2-19-98 13:24:18 REC:Loc    //
+//                                                       //
+//      Trace program: running                           //
+//                                                       //
+//            wake up, Neo...                            //
+//         the matrix has you                            //
+//       follow the white rabbit.                        //
+//                                                       //
+//           knock, knock, Neo.                          //
+//                                                       //
+//                         (`.         ,-,               //
+//                         ` `.    ,;' /                 //
+//                          `.  ,'/ .'                   //
+//                           `. X /.'                    //
+//                 .-;--''--.._` ` (                     //
+//               .'            /   `                     //
+//              ,           ` '   Q '                    //
+//              ,         ,   `._    \                   //
+//           ,.|         '     `-.;_'                    //
+//           :  . `  ;    `  ` --,.._;                   //
+//            ' `    ,   )   .'                          //
+//               `._ ,  '   /_                           //
+//                  ; ,''-,;' ``-                        //
+//                   ``-..__``--`                        //
+///////////////////////////////////////////////////////////
+
+GIT_URL               = "ssh://bitbucket.org/dlaargentina/claro-jitsi-meet.git"
+OKD_API               = "https://172.26.90.131:8443"
+OKD_KEY_API_JITSI     = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJqaXRzaS1jbGFyb2Nvbm5lY3QiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi0yeG5jNSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNzRhZjQyOWEtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmppdHNpLWNsYXJvY29ubmVjdDpqZW5raW5zIn0.R_YHcPOKpZDZzPbpm3j1f1QxKnFWF3qYXJuw-226U4uOsb9duu3neGGQZnG3vF_SuH1newM-hWtEXwVpCveDEJqEH_-ao6VkQcoHxMfWYI3w12kQUEJLukJr7jgIwLFC4n34pP4bn3CaS0G0zECO-L88CmGScUet6xWjeYuvXrqsd5y3KpXnyYdedN72-w6Prw1j2LPhpj57UU6N8RjRVKsr47X_2JUM-22UMlCTZO5Sc3ny-g5BXxASkHYBGjwsOuHgDawlSWOQRC244LCogCvoawM1U98u-9ORdCA2Elqhhspo7hrmpK8Y2EyEHdgeYv58CxeU2oHc2OsMa04yIA'
+OKD_KEY_API_CCMKBUILD = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjY21rYnVpbGQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi1qamw0aiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMzI0M2JmNjAtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNjbWtidWlsZDpqZW5raW5zIn0.sH4V176b8REzPDuzgM47yZWNufbWYqiNuXBwPTTu6VAvzYaMMDOYaQMxYknBWPl0GyzROEw05jQkBU6VnywcGzaldWMN4unm_2bupW6I22JFaRgpEkIKMeiBlCjelRRsAOpcp44RGlLR2ti9s6_ps-j7xToyKTsmmuKzBmWHDMdFXVkNctXhO3NU0P4B5blCHKU4-g8cU5meJpcAGwSoCXi8vYWWXPkkqhwIkgtZ5ugHa-62zkWnK2fB-LUZzg25FkYmpHly1EujceEUyLLoK9lwnsSvzoGbisQ98ZkoKl9eDGBVuCvbwkIYx-8Px6_fQ1NfCdsWr3dinD0-Vwfx0A'
+REMOTE_RO_REGISTRY  = "docker-source-registry.amxdigital.net"
+REMOTE_RO_REGISTRY_SECRET = "registry-amx"
+
+// Build image Jicofo
+node("jenkins-ccmkbuild"){
+    def buildConfigTemplateJicofo = [
+        "apiVersion": "v1",
+        "kind": "BuildConfig",
+        "metadata":[
+            "name": "${env.BUILD_TAG}"
+        ],
+        "spec":[
+            "source":[
+                "type": "Binary"
+            ],
+            "output":[
+                "to":[
+                    "kind": "DockerImage",
+                    "name": "${REMOTE_RO_REGISTRY}/${env.JOB_NAME}-jicofo:v${env.BUILD_NUMBER}"
+                ],
+                "pushSecret":[
+                    "name": "${REMOTE_RO_REGISTRY_SECRET}"
+                ]
+            ],
+            "strategy": [
+                "type": "Docker"
+            ]
+        ]
+    ]
+
+    def buildConfigTemplateProsody = [
+        "apiVersion": "v1",
+        "kind": "BuildConfig",
+        "metadata":[
+            "name": "${env.BUILD_TAG}"
+        ],
+        "spec":[
+            "source":[
+                "type": "Binary"
+            ],
+            "output":[
+                "to":[
+                    "kind": "DockerImage",
+                    "name": "${REMOTE_RO_REGISTRY}/${env.JOB_NAME}-prosody:v${env.BUILD_NUMBER}"
+                ],
+                "pushSecret":[
+                    "name": "${REMOTE_RO_REGISTRY_SECRET}"
+                ]
+            ],
+            "strategy": [
+                "type": "Docker"
+            ]
+        ]
+    ]
+    
+    stage("Prepare build"){
+        //Create Dockerfile for Jicofo
+        sh """#!/bin/bash -x
+            cat<<-EOF > Dockerfile
+FROM jitsi/base-java
+
+RUN apt-dpkg-wrap apt-get update && \
+    apt-dpkg-wrap apt-get install -y jicofo && \
+    apt-cleanup && \
+    mkdir -p /etc/cont-init.d/ && \
+    echo "IyEvdXNyL2Jpbi93aXRoLWNvbnRlbnYgYmFzaAoKc2VydmljZSBqaWNvZm8gcmVzdGFydA==" | base64 -d > /etc/cont-init.d/10-config
+EOF
+        """
+
+        // BuildConfig to Jicofo
+        openshift.withCluster("${OKD_API}","${OKD_KEY_API_CCMKBUILD}"){
+            openshift.withProject("ccmkbuild"){
+                openshift.apply(buildConfigTemplateJicofo)
+            }
+        }
+
+    }
+
+    // Build image
+    stage("Building image"){
+        sh "oc start-build ${env.BUILD_TAG} --from-dir . --follow"
+    }
+
+    // Clean objects
+    stage("Clean Object"){
+        sh "oc delete bc ${env.BUILD_TAG}"
+    }
+
+// Build image Prosody
+    stage("Clone Repository"){
+        sh "mkdir claro-jitsi-meet"
+        dir("claro-jitsi-meet"){
+            git credentialsId: 'git-key', url: "${GIT_URL}"
+        }
+    }
+
+    stage("Prepare build"){
+        //Create Dockerfile for Jicofo
+        sh """#!/bin/bash -x
+            cat<<-EOF > Dockerfile
+FROM jitsi/base-java
+
+ADD https://prosody.im/files/prosody-debian-packages.key /tmp/prosody.key
+
+RUN apt-key add /tmp/prosody.key \
+    && rm -f /tmp/prosody.key \
+    && echo "deb http://packages.prosody.im/debian stretch main" > /etc/apt/sources.list.d/prosody.list \
+    && apt-dpkg-wrap apt-get update \
+    && apt-dpkg-wrap apt-get install build-essential -y \
+    && apt-dpkg-wrap apt-get install m4 -y \
+    && apt-dpkg-wrap apt-get install -y prosody \
+    && apt-dpkg-wrap apt-get install -t stretch-backports -y \
+      liblua5.2-dev \
+      sasl2-bin \
+      libsasl2-modules-ldap \
+      libsasl2-dev \
+      libssl1.0-dev \
+      lua-basexx \
+      lua-ldap \
+      lua-sec \
+      luarocks \
+      git \
+      gcc \
+      patch \
+    && luarocks install net-url 0.9-1 \
+    && luarocks install basexx \
+    && luarocks install lua-cjson 2.1.0-1 \
+    && luarocks install luajwtjitsi \
+    && luarocks install http \
+    && luarocks install cyrussasl 1.1.0-1 \
+    && apt-dpkg-wrap apt-get remove -t stretch-backports -y \
+      git \
+      gcc \
+      luarocks \
+      libsasl2-dev \
+      libssl1.0-dev \
+      liblua5.2-dev \
+    && apt-cleanup \
+    && rm -rf /var/cache/apt && \
+    mkdir -p /etc/prosody/conf.d && \
+    mkdir -p /etc/prosody/certs && \
+    mkdir -p /usr/share/claro-jitsi-meet && \
+    touch /etc/prosody/conf.d/videoconferenciaclaro.com.cfg.lua && \
+    touch /etc/prosody/prosody.cfg.lua && \
+    chown -R prosody:prosody /etc/prosody && \
+    echo "IyEvdXNyL2Jpbi93aXRoLWNvbnRlbnYgYmFzaAoKaWYgWyAteiAiJHtKSUNPRk9fQVVUSF9ET01BSU59IiBdOyB0aGVuCiAgICBKSUNPRk9fQVVUSF9ET01BSU49ImF1dGguY2xhcm9jb25uZWN0LmNvbSIKZmkKCmlmIFsgLXogIiR7SklDT0ZPX0ZPQ1VTX1BBU1NXT1JEfSIgXTsgdGhlbgogICAgSklDT0ZPX0ZPQ1VTX1BBU1NXT1JEMD0iZmE4RG1HUWsiCmZpCgppZiBbIC16ICIke0pJQ09GT19KVkJfUEFTU1dPUkR9IiBdOyB0aGVuCiAgICBKSUNPRk9fSlZCX1BBU1NXT1JEMD0iSldsYzZDRGciCmZpCgpwcm9zb2R5Y3RsIHJlZ2lzdGVyIGZvY3VzICRKSUNPRk9fQVVUSF9ET01BSU4gJEpJQ09GT19GT0NVU19QQVNTV09SRApwcm9zb2R5Y3RsIHJlZ2lzdGVyIGp2YiAkSklDT0ZPX0FVVEhfRE9NQUlOICRKSUNPRk9fSlZCX1BBU1NXT1JEMAoKc2VydmljZSBwcm9zb2R5IHJlc3RhcnQ=" | base64 -d > /etc/cont-init.d/10-config 
+
+COPY claro-jitsi-meet /usr/share/claro-jitsi-meet
+
+EXPOSE 5222 5269 5347 5280
+
+EOF
+        """
+
+        // BuildConfig to Jicofo
+        openshift.withCluster("${OKD_API}","${OKD_KEY_API_CCMKBUILD}"){
+            openshift.withProject("ccmkbuild"){
+                openshift.apply(buildConfigTemplateProsody)
+            }
+        }
+
+    }
+
+    // Build image
+    stage("Building image"){
+        sh "oc start-build ${env.BUILD_TAG} --from-dir . --follow"
+    }
+
+    // Clean objects
+    stage("Clean Object"){
+        sh "oc delete bc ${env.BUILD_TAG}"
+    }
+}
+
+
+
+
+
+
+
+
+
+
+// Deploy Prosody and jicofo
+node("jenkins-jitsi-claroconnect"){
+
+def deploymentConfigTemplate = [
+    "apiVersion":"apps.openshift.io/v1",
+    "kind":"DeploymentConfig",
+    "metadata":[
+        "name":"jvp-jp-iam-dc"
+    ],
+    "spec":[
+        "replicas": 1,
+        "template":[
+            "metadata":[
+                "labels":[
+                    "jvp-labels":"jvp-jp-iam"
+                ]
+            ],
+            "spec":[
+                "containers":[
+                    ["name":"jicofo-iam",
+                        "image":"${REMOTE_RO_REGISTRY}/${env.JOB_NAME}-jicofo:${env.BUILD_NUMBER}",
+                        "imagePullPolicy": "IfNotPresent",
+                        "restartPolicy": "OnFailure",
+                        "ports":[
+                            ["containerPort": 5222,
+                            "name": "jicofo-iam-5222"],
+                            ["containerPort": 5347,
+                            "name": "jicofo-iam-5347"],
+                            ["containerPort": 5280,
+                            "name": "jicofo-iam-5280"],
+                        ],
+                        "volumeMounts":[
+                            ["name": "tz-mexico",
+                            "mountPath": "/etc/localtime"],
+                            ["name": "sip-communicator-properties",
+                            "mountPath": "/etc/jitsi/jicofo/sip-communicator.properties",
+                            "subPath": "sip-communicator.properties"],
+                            ["name": "jp-config",
+                            "mountPath": "/etc/jitsi/jicofo/config",
+                            "subPath": "config"],
+                            ["name": "server-iam-config-js",
+                            "mountPath": "/usr/share/claro-jitsi-meet/config.js",
+                            "subPath": "config.js"],
+                        ]
+                    ],
+                    ["name":"prosody-iam",
+                        "image":"${REMOTE_RO_REGISTRY}/${env.JOB_NAME}-prosody:${env.BUILD_NUMBER}",
+                        "imagePullPolicy": "IfNotPresent",
+                        "restartPolicy": "OnFailure",
+                        "volumeMounts":[
+                            ["name": "tz-mexico",
+                            "mountPath": "/etc/localtime"],
+                            ["name": "claroconnect-com-cfg-lua",
+                            "mountPath": "/etc/prosody/conf.d/claroconnect.com.cfg.lua",
+                            "subPath": "claroconnect.com.cfg.lua"],
+                            ["name": "jvp-certificate-pem",
+                            "mountPath": "/etc/prosody/certs/jitsi.claroconnect.com.pem",
+                            "subPath": "jitsi.claroconnect.com.pem"],
+                            ["name": "jvp-certificate-key",
+                            "mountPath": "/etc/prosody/certs/jitsi.claroconnect.com.key",
+                            "subPath": "jitsi.claroconnect.com.key"],
+                        ]
+                    ]
+                ],
+                "volumes":[
+                    ["name":"tz-mexico",
+                        "hostPath":[
+                         "path":"/usr/share/zoneinfo/America/Mexico_City"
+                        ]
+                    ],
+                    ["name":"prosody-cfg-lua",
+                        "configMap":[
+                            "name":"jvp-jp-iam-prosody-cfg-lua-cm"
+                        ]
+                    ],
+                    ["name":"claroconnect-com-cfg-lua",
+                        "configMap":[
+                            "name":"jvp-jp-iam-cc-cfg-lua-cm"
+                        ]
+                    ],
+                    ["name":"jvp-certificate-pem",
+                        "configMap":[
+                            "name":"jvp-certificate-pem-cm"
+                        ]
+                    ],
+                    ["name":"jvp-certificate-key",
+                        "configMap":[
+                            "name":"jvp-certificate-key-cm"
+                        ]
+                    ],
+                    ["name":"sip-communicator-properties",
+                        "configMap":[
+                            "name":"jvp-jp-iam-sip-communicator-cm"
+                        ]
+                    ],
+                    ["name":"jp-config",
+                        "configMap":[
+                            "name":"jvp-jp-iam-config-cm"
+                        ]
+                    ],
+                    ["name":"server-iam-config-js",
+                        "configMap":[
+                            "name":"jvp-server-iam-config-js-cm"
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+
+    //Replace current deployment
+    stage("Deploy Jicofo And Prosody"){
+        openshift.withCluster("${OKD_API}","${OKD_KEY_API_JITSI}"){
+            openshift.withProject("jitsi-claroconnect"){
+                openshift.apply(buildConfigTemplate)
+            }
+        }
+    }
+}

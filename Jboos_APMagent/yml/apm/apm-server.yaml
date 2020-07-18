@@ -1,0 +1,26 @@
+######################### APM Server Configuration #########################
+
+################################ APM Server ################################
+
+apm-server:
+  # Defines the host and port the server is listening on. Use "unix:/path/to.sock" to listen on a unix domain socket.
+  host: "0.0.0.0:8200"
+
+#=============================== Kibana =====================================
+
+kibana:
+    # For APM Agent configuration in Kibana, enabled must be true.
+  enabled: true
+
+    # Scheme and port can be left out and will be set to the default (`http` and `5601`).
+    # In case you specify an additional path, the scheme is required: `http://localhost:5601/path`.
+    # IPv6 addresses should always be defined as: `https://[2001:db8::1]:5601`.
+  host: "kibana:5601"
+
+#================================ Outputs =================================
+
+# Configure the output to use when sending the data collected by apm-server.
+
+#-------------------------- Elasticsearch output --------------------------
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]

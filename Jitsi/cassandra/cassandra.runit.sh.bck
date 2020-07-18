@@ -1,0 +1,262 @@
+#!/bin/bash
+################################################
+#                                              #
+#               Cassandra Runit                #
+#                                              #
+################################################
+
+firewall-cmd --permanent --add-port=7000/tcp
+firewall-cmd --permanent --add-port=7001/tcp
+firewall-cmd --permanent --add-port=9160/tcp
+firewall-cmd --permanent --add-port=9042/tcp
+firewall-cmd --reload
+
+CASSANDRA_CLUSTER_NAME='jitsi-cassandra'
+CASSANDRA_LISTEN_ADDRESS="172.26.90.154" # Ip del servidor
+CASSANDRA_CLUSTER_SEEDS="172.26.90.154,172.26.90.155,172.26.90.156" # Ip de los nodos que conformarán el cluster
+CASSANDRA_DC="jitsi-cassandra-dc" # Nombre dle datacenter de este nodo
+CASSANDRA_RACK="jitsi-cassandra-rc" # Nombre del rack de este nodo
+CASSANDRA_CONTAINER="cassandra"
+CASSANDRA_USER="" # Usuario admin
+CASSAMDRA_PASSWORD="" # Password admin
+
+mkdir -p /var/containers/$CASSANDRA_CONTAINER/{var/lib/cassandra,etc/cassandra/conf/}
+
+cat<<-EOF > /var/containers/$CASSANDRA_CONTAINER/etc/cassandra/conf/cassandra.yaml
+## Nombre del cluster que levantara cassandra
+cluster_name: $CASSANDRA_CLUSTER_NAME
+
+## Ip por la que Cassandra estará escuchando, dejamos que cassandra lo configure
+#listen_address: $CASSANDRA_LISTEN_ADDRESS
+
+## La dirección RPC para transmitir a los controladores y otros nodos de Cassandra
+broadcast_rpc_address: $CASSANDRA_LISTEN_ADDRESS
+
+## La dirección IP "pública" que este nodo usa para transmitir a otros nodos fuera de la red o en regiones de múltiples regiones
+broadcast_address: $CASSANDRA_LISTEN_ADDRESS
+
+## Directorio donde se almacenará la data
+data_file_directories:
+  - /var/lib/cassandra/data
+commitlog_directory: /var/lib/cassandra/commitlog
+hints_directory: /var/lib/cassandra/hints
+
+## Política para errores de disco de confirmación
+### Con stop el nodo se detiene por completo.
+commit_failure_policy: stop
+
+## Estrategia en optimizacion de lecturas en disco
+disk_optimization_strategy: ssd
+
+## Valores recomendados para produccion
+endpoint_snitch: GossipingPropertyFileSnitch
+
+## Especificamos que escuche desde donde sea
+rpc_address: 0.0.0.0
+
+## Miembros del cluster
+seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          - seeds: $CASSANDRA_CLUSTER_SEEDS
+
+## Limitan la ejecucion de usuarios con el fin de prevenir riesgos
+### Deshabilitamos esto por que queremos tener control total.
+enable_user_defined_functions: false
+enable_scripted_user_defined_functions: false
+
+## Acelera la compactación al Mb / segundo especificado en la instancia. 
+compaction_throughput_mb_per_sec: 16
+
+## Se manda una advertencia cuando Cassandra compacta paquetes mas grandes que el que aqui se señala
+compaction_large_partition_warning_threshold_mb: 100
+
+## Evita cuellos de botella
+concurrent_reads: 32
+
+## Escritura concurrentes, lo ideal es 8 * numero de cores
+concurrent_writes: 96
+
+## Similar a concurrent_reads
+concurrent_counter_writes: 32
+
+## Límite en el número de escrituras concurrentes de vista materializada.
+concurrent_materialized_view_writes: 32
+
+## Realiza una copia de seguridad de los datos actualizados desde que se tomó la última instantánea.
+incremental_backups: false
+
+## Activa o desactiva la toma de una instantánea antes de cada compactación. Una instantánea es útil para hacer una copia de seguridad de los datos cuando hay un cambio de formato de datos. Tenga cuidado al usar esta opción: Cassandra no limpia instantáneas antiguas automáticamente.
+snapshot_before_compaction: false
+
+## El método que usa Cassandra para reconocer las escrituras en milisegundos.
+commitlog_sync: periodic
+
+commitlog_segment_size_in_mb: 32
+
+## Hace que los nuevos nodos migren los datos. Para instalaciones nuevas el valor debe estar en false
+auto_bootstrap: false
+
+## Determina el número de rangos de tokens para asignar a esto (vnode).
+num_tokens: 256
+
+## Activa o desactiva la transferencia sugerida.
+hinted_handoff_enabled: true
+
+## Cantidad máxima de tiempo durante el cual Cassandra genera sugerencias para un nodo que no responde.
+max_hint_window_in_ms: 3600000
+
+## Cantidad máxima de tráfico por subproceso de entrega en kilobytes por segundo.
+hinted_handoff_throttle_in_kb: 1024
+
+## Número de hilos que Cassandra usa para entregar pistas.
+max_hints_delivery_threads: 3
+
+## Establece cómo Cassandra responde a la falla del disco.
+disk_failure_policy: stop
+
+## Autenticacion sobre el clusyer de Cassandra
+authenticator: org.apache.cassandra.auth.PasswordAuthenticator
+
+## Administracion de permisos
+authorizer: org.apache.cassandra.auth.CassandraAuthorizer
+
+## Administracion de roles en el cluster
+role_manager: CassandraRoleManager
+
+## Puertos para la intercomunicación de los nodos
+storage_port: 7000
+ssl_storage_port: 7001
+
+## Puerto donde el transporte nativo CQL
+native_transport_port: 9042
+
+## Configuracion para la conexion con clientes
+rpc_port: 9160
+start_rpc: true
+rpc_keepalive: true
+rpc_server_type: sync
+
+## Encryptacion de los datos
+transparent_data_encryption_options:
+    enabled: false
+    chunk_length_kb: 64
+    cipher: AES/CBC/PKCS5Padding
+    key_alias: testing:1
+    key_provider: 
+      - class_name: org.apache.cassandra.security.JKSKeyProvider
+        parameters: 
+          - keystore: conf/.keystore
+            keystore_password: cassandra
+            store_type: JCEKS
+            key_password: cassandra
+
+## Encriptacion entre nodos
+server_encryption_options:
+    internode_encryption: none
+    keystore: conf/.keystore
+    keystore_password: cassandra
+    truststore: conf/.truststore
+    truststore_password: cassandra
+
+## Encriptacion para la comunicacion con los clientes
+client_encryption_options:
+    enabled: false
+    optional: false
+    keystore: conf/.keystore
+    keystore_password: cassandra
+
+## El número de procesos de compactación concurrentes permitidos para ejecutarse simultáneamente en un nodo.
+concurrent_compactors: 2
+
+## Admministación de la cache
+row_cache_size_in_mb: 0
+row_cache_save_period: 0
+
+## Genera un pequeño backup de la informacion cuando se ejecutan tareas como drop y truncate
+auto_snapshot: true
+
+## Tiempo que espera Cassandra para realizar el backup (snapshot) en tareas como truncate o drop
+truncate_request_timeout_in_ms: 600000
+
+## Clase utilizada para la distribucion de las filas a lo largo de los nodos
+partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+
+## Tamaño y tiempo de almacenamiento de las llaves en cache
+key_cache_size_in_mb:
+key_cache_save_period: 14400
+hints_flush_period_in_ms: 10000
+max_hints_file_size_in_mb: 128
+batchlog_replay_throttle_in_kb: 1024
+roles_validity_in_ms: 2000
+permissions_validity_in_ms: 2000
+cdc_enabled: false
+prepared_statements_cache_size_mb:
+thrift_prepared_statements_cache_size_mb:
+counter_cache_size_in_mb:
+counter_cache_save_period: 7200
+commitlog_sync_period_in_ms: 10000
+memtable_allocation_type: heap_buffers
+memtable_flush_writers: 1
+index_summary_capacity_in_mb:
+index_summary_resize_interval_in_minutes: 60
+trickle_fsync: false
+trickle_fsync_interval_in_kb: 10240
+start_native_transport: true
+thrift_framed_transport_size_in_mb: 15
+column_index_size_in_kb: 64
+column_index_cache_size_in_kb: 2
+sstable_preemptive_open_interval_in_mb: 50
+read_request_timeout_in_ms: 5000
+range_request_timeout_in_ms: 10000
+write_request_timeout_in_ms: 2000
+counter_write_request_timeout_in_ms: 5000
+cas_contention_timeout_in_ms: 1000
+request_timeout_in_ms: 10000
+slow_query_log_timeout_in_ms: 500
+cross_node_timeout: false
+dynamic_snitch_update_interval_in_ms: 100 
+dynamic_snitch_reset_interval_in_ms: 600000
+dynamic_snitch_badness_threshold: 0.1
+request_scheduler: org.apache.cassandra.scheduler.NoScheduler
+internode_compression: dc
+inter_dc_tcp_nodelay: false
+tracetype_query_ttl: 86400
+tracetype_repair_ttl: 604800
+windows_timer_interval: 1
+tombstone_warn_threshold: 1000
+tombstone_failure_threshold: 100000
+batch_size_warn_threshold_in_kb: 5
+batch_size_fail_threshold_in_kb: 50
+unlogged_batch_across_partitions_warn_threshold: 10
+gc_warn_threshold_in_ms: 1000
+back_pressure_enabled: false
+enable_materialized_views: true
+enable_sasi_indexes: true
+EOF
+
+sysctl -w vm.max_map_count=1048575
+echo never | tee /sys/kernel/mm/transparent_hugepage/defrag
+
+docker run -itd --name $CASSANDRA_CONTAINER \
+    --memory-swappiness=0 \
+    --restart unless-stopped \
+    --ulimit memlock=-1:-1 \
+    -p 7000:7000 \
+    -p 7001:7001 \
+    -p 9160:9160 \
+    -p 9042:9042 \
+    -v /var/containers/$CASSANDRA_CONTAINER/var/lib/cassandra:/var/lib/cassandra:z \
+    -v /var/containers/$CASSANDRA_CONTAINER/etc/cassandra/conf/:/etc/cassandra/conf/:z \
+    -v /etc/localtime:/etc/localtime:ro \
+    -e TZ=America/Mexico_City \
+    -e CASSANDRA_DC=$CASSANDRA_DC \
+    -e CASSANDRA_RACK=$CASSANDRA_RACK \
+    -e CASSANDRA_ADMIN_USER=$CASSANDRA_ADMIN_USER \
+    -e CASSANDRA_ADMIN_PASSWORD=$CASSANDRA_ADMIN_PASSWORD \
+    -e "JVM_OPTS=-Xms24576M -Xmx24576M -XX:NewSize=6144M -XX:MaxNewSize=6144M" \
+    cassandra:3.11.6 -Dcassandra.config=file:///etc/cassandra/conf/cassandra.yaml
+
+docker exec -it $CASSANDRA_CONTAINER bash -c "echo \"$CASSANDRA_ADMIN_USER $CASSANDRA_ADMIN_PASSWORD\" >> /etc/cassandra/jmxremote.password"
+docker exec -it $CASSANDRA_CONTAINER bash -c "echo \"create role $CASSANDRA_ADMIN_USER with password = '$CASSANDRA_ADMIN_PASSWORD' AND SUPERUSER = true AND LOGIN = true;\" | cqlsh $(cat /etc/hostname) -u cassandra -p cassandra"
+docker exec -it $CASSANDRA_CONTAINER bash -c "echo \"drop role cassandra;\" | cqlsh $(cat /etc/hostname) -u admin -p $CASSANDRA_ADMIN_PASSWORD"

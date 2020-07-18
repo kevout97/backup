@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  app
+
+  Created by Jorge Efrain Sanchez Figueroa on 04/03/20.
+  Copyright © 2020 Facebook. All rights reserved.
+*/
+
+"kStringNoNetwork" = "Servicio no disponible";
+"kStringInfoNoNetwork" = "Tu dispositivo puede estar sin conexión a internet o el servidor experimentando problemas.";
+"kStringTryAgainNetwork" = "Intentar de nuevo";
+"kStringCancel" = "Salir";

@@ -1,0 +1,81 @@
+# Preparacion de servidores Ceph a partir de las siguientes urls
+## https://docs.ceph.com/docs/master/install/get-packages/
+## https://docs.ceph.com/docs/master/install/ceph-deploy/quick-start-preflight/#ceph-node-setup
+- hosts: ceph
+  become: yes
+  become_user: root
+  tasks:
+  - name: "Keys para repo de Ceph"
+    shell: rpm --import 'https://download.ceph.com/keys/release.asc'
+  
+  - name: "Repo Ceph"
+    copy:
+      src: ../ceph/ceph.repo
+      dest: /etc/yum.repos.d/ceph.repo
+      owner: root
+      group: root
+      mode: '644'
+  
+  - name: "Paquetes Ceph"
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - ceph-deploy
+      - ntp
+      - ntpdate
+      - ntp-doc
+      - yum-plugin-priorities
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      - python-pip
+      - python-cherrypy
+      - python-pecan
+      - ceph-common
+  
+  - name: "Paquetes python 2.7"
+    pip:
+      name: "{{ item }}"
+    with_items:
+      - pecan
+      - werkzeug
+      - cherrypy
+      - prometheus
+  
+  - name: "Paquetes python 3"
+    pip:
+      name: "{{ item }}"
+      executable: pip3
+    with_items:
+      - pecan
+      - werkzeug
+      - cherrypy
+      - prometheus
+  
+  - name: "Inicio Firewalld"
+    service:
+      name: firewalld
+      state: started
+  
+  - name: "Puertos Ceph"
+    firewalld:
+      zone: public
+      state: enabled
+      permanent: yes
+      port: "{{ item }}"
+    notify: reload firewalld
+    with_items:
+      - "6789/udp"
+      - "6789/tcp"
+      - "6800-7300/tcp"
+      - "6800-7300/udp"
+  
+  - name: "Configuracion Selinux"
+    selinux:
+      policy: targeted
+      state: permissive
+
+  handlers:
+  - name: reload firewalld
+    service:
+      name: firewalld
+      state: reloaded

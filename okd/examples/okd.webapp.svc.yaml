@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-svc
+spec:
+  selector:
+    webapp: webapp-verito
+  ports:
+  - name: 'webapphttp'
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  - name: 'webapphttps'
+    port: 443
+    targetPort: 443
+    protocol: TCP
+  type: ClusterIP

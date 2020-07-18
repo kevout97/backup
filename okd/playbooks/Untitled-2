@@ -1,0 +1,121 @@
+#Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     20000
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+#    option http-server-close
+    option forwardfor       except 127.0.0.0/8
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 20000
+
+listen stats 
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+
+frontend  router-openshift
+    bind *:80
+
+# ACLs
+#    acl host_router_t1envios hdr(host) sub -i dev.t1envios.com
+#    use_backend router-openshift-t1envios if host_router_t1envios
+
+    default_backend router-openshift
+    mode tcp
+    option tcplog
+
+## Frontends ##
+
+frontend  router-openshift-ssl-1
+    bind *:8443
+    default_backend router-openshift-ssl-1
+    mode tcp
+    option tcplog
+
+frontend  router-openshift-ssl-2
+    bind *:443
+
+# ACLs
+#    acl host_router_t1envios-ssl req.ssl_sni -m sub -i dev.t1envios.com
+#    use_backend router-openshift-ssl-t1envios-2 if host_router_t1envios-ssl
+
+    default_backend router-openshift-ssl-2
+    mode tcp
+    option tcplog
+
+
+## Backends ##
+
+backend router-openshift
+    balance source
+    mode tcp
+    server      infra-1 172.26.127.41:80 check
+    server      infra-2 172.26.127.42:80 check
+
+backend router-openshift-ssl-1
+    balance source
+    mode tcp
+    server      infra-1 172.26.127.41:8443 check
+    server      infra-2 172.26.127.42:8443 check
+
+
+backend router-openshift-ssl-2
+    balance source
+    mode tcp
+    server      infra-1 172.26.127.41:443 check
+    server      infra-2 172.26.127.42:443 check
+ 
+
+certbot certonly --manual -d *.apps.okd.amx.gadt.amxdigital.net -d apps.okd.amx.gadt.amxdigital.net --agree-tos --no-bootstrap --manual-public-ip-logging-ok --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
+certbot certonly --manual -d *.apps.okd.cs.gadt.amxdigital.net -d apps.okd.cs.gadt.amxdigital.net --agree-tos --no-bootstrap --manual-public-ip-logging-ok --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
+
+oc adm policy add-scc-to-user hostnetwork -z router
+oc adm router openshift-router --replicas=0 --service-account=router
+oc set env dc/openshift-router ROUTER_ALLOW_WILDCARD_ROUTES=true
+oc scale dc/openshift-router --replicas=1
+
+ansible -a "bash -c '/usr/local/bin/master-restart api'" masters -i /opt/okd/playbooks/0.inventory
+ansible -a "bash -c '/usr/local/bin/master-restart controllers'" masters -i /opt/okd/playbooks/0.inventory
+
+SMTP_FORWARDING_HOST=fast.smtpok.com
+SMTP_FORWARDING_PORT=25
+echo "*       smtp:[$SMTP_FORWARDING_HOST]:$SMTP_FORWARDING_PORT" >> /var/containers/mailserver/etc/postfix/transport
+docker exec -it mailserver postmap /etc/postfix/transport
+docker exec -it mailserver /etc/rc.d/init.d/saslauthd status
+docker exec -it mailserver /etc/rc.d/init.d/saslauthd start
+docker exec -it mailserver postfix reload
+
+saslpasswd2 -c -u 10.23.144.136 -a smtpauth user@tienda-ec.amxdigital.net
+amFibGFiMkBzbXRwLmFteC5nYWR0LmFteGRpZ2l0YWwubmV0Cg==
+YWJjZDEyMzQK
+
+s138214_2@fast.smtpok.com
+
+htpasswd -c -B -b /etc/origin/master/htpasswd <user_name> <password>

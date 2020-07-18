@@ -1,0 +1,25 @@
+#Backup ETCD
+
+## Backup de los archivos de configuracion
+mkdir -p /opt/backup-etcd-config-$(date +%Y%m%d)/
+cp -R /etc/etcd/ /opt/backup-etcd-config-$(date +%Y%m%d)/
+
+## Backup de la data
+ETCDCTL_API=3 etcdctl3 --cert="/etc/etcd/peer.crt" \
+    --key=/etc/etcd/peer.key \
+    --cacert="/etc/etcd/ca.crt" \
+    --endpoints="https://okdamxmast1-1.okd.amx.gadt.amxdigital.net:2379" \
+    endpoint health
+
+ETCDCTL_API=3 etcdctl3 --cert="/etc/etcd/peer.crt" \
+    --key=/etc/etcd/peer.key \
+    --cacert="/etc/etcd/ca.crt" \
+    --endpoints="okdmast01.okd.cs.gadt.amxdigital.net:2379" \
+    endpoint health
+
+oc exec master-etcd-okdmast01.okd.cs.gadt.amxdigital.net -c etcd -- /bin/bash -c "ETCDCTL_API=3 etcdctl \
+    --cert /etc/etcd/peer.crt \
+    --key /etc/etcd/peer.key \
+    --cacert /etc/etcd/ca.crt \
+    --endpoints "https://okdmast01.okd.cs.gadt.amxdigital.net:2379 \
+    endpoint health

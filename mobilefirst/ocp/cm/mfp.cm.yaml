@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mfp-cm
+data:
+  MFPF_SERVER_HTTPPORT: "80"
+  MFPF_SERVER_HTTPSPORT: "443"
+  MFPF_CLUSTER_MODE: Farm
+  MFPF_DB2_SERVER_NAME: mfp-db2-svc.mfp.svc
+  MFPF_DB2_PORT: "50000"
+  MFPF_DB2_DATABASE_NAME: MFPDATA
+  ANALYTICS_URL: "https://mfp-analytics.apps.okd.amx.gadt.amxdigital.net"

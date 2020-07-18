@@ -1,0 +1,53 @@
+#!/bin/bash
+
+CONTAINER_NAME=cassandra-02
+
+CASSANDRA_CLUSTER_NAME="jitsi-cassandra"
+CASSANDRA_RACK="jitsi_rack"
+CASSANDRA_DATA_CENTER="jitsi-cassandra"
+CASSANDRA_BROADCAST_RPC_ADDRESS="172.26.90.155"
+CASSANDRA_BROADCAST_ADDRESS="172.26.90.155"
+CASSANDRA_SEEDS="172.26.90.154, 172.26.90.155, 172.26.90.156"
+CASSANDRA_ADMIN_PASSWORD="C4g2MV6VmQxz"
+USER_JMX="clusterjmx"
+PASSW_JMX="LDPPng62GjJq"
+
+docker rm -f ${CONTAINER_NAME}
+
+rm -rf /var/containers/${CONTAINER_NAME}
+mkdir -p /var/containers/${CONTAINER_NAME}/var/lib/cassandra 
+chown -R 999:998 /var/containers/${CONTAINER_NAME}/var/lib/cassandra
+
+sysctl -w vm.max_map_count=1048575
+
+sudo docker run -td --name ${CONTAINER_NAME} \
+    --hostname=$CONTAINER_NAME.service \
+    -p 9042:9042 \
+    -p 7000:7000 \
+    -p 9160:9160 \
+    --health-cmd='/sbin/docker-health-check.sh' \
+    --health-interval=10s \
+    --restart unless-stopped \
+    --ulimit memlock=-1:-1 \
+    -v /usr/share/zoneinfo:/usr/share/zoneinfo:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /var/containers/${CONTAINER_NAME}/var/lib/cassandra:/var/lib/cassandra:z \
+    -e "TZ=America/Mexico_City" \
+    -e "CASSANDRA_START_RPC=true" \
+    -e "CASSANDRA_RPC_ADDRESS=0.0.0.0" \
+    -e "CASSANDRA_CLUSTER_NAME=$CASSANDRA_CLUSTER_NAME" \
+    -e "DATA_CENTER=$CASSANDRA_DATA_CENTER" \
+    -e "RACK=$CASSANDRA_RACK" \
+    -e "CASSANDRA_BROADCAST_RPC_ADDRESS=$CASSANDRA_BROADCAST_RPC_ADDRESS" \
+    -e "CASSANDRA_BROADCAST_ADDRESS=$CASSANDRA_BROADCAST_ADDRESS" \
+    -e "CASSANDRA_SEEDS=$CASSANDRA_SEEDS" \
+    -e "CASSANDRA_ADMIN_PASSWORD=$CASSANDRA_ADMIN_PASSWORD" \
+    -e "USER_JMX=$USER_JMX" \
+    -e "PASSW_JMX=$PASSW_JMX" \
+    -e "CASSANDRA_MEMTABLE_ALLOCATION_TYPE=offheap_objects" \
+    -e "LOCAL_JMX=no" \
+    docker-source-registry.amxdigital.net/atomic-rhel7-cassandra:3.11.6
+
+#cqlsh -u admin -p C4g2MV6VmQxz
+#nodetool -u clusterjmx -pw LDPPng62GjJq removenode 2ffb05af-9e8e-4e4d-9458-016fedd492b4
+#nodetool -u clusterjmx -pw LDPPng62GjJq status

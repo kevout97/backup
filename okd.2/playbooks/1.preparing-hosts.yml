@@ -1,0 +1,86 @@
+# Playbook para preparar hosts
+## Esto solo aplica para los servidores que pertenecen al cluster de OKD, no se toma
+## en cuenta los servidores para Ceph
+- hosts: "{{ variable_host | default('okd') }}"
+  become: yes
+  become_user: root
+  tasks:
+  - name: "Paquetes para OKD"
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - wget
+      - git
+      - net-tools
+      - bind-utils
+      - yum-utils
+      - iptables-services
+      - bridge-utils
+      - bash-completion
+      - kexec-tools
+      - sos 
+      - psacct
+      - docker
+      - ceph-common
+      - httpd-tools
+
+  - name: "Inicio de Docker"
+    service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: "Estado de Swap"
+    shell : free -m | grep Swap | awk '{print $3}'
+    register: swap_used
+
+  - name: "Deshabilitar Swap"
+    shell: swapoff -a
+    changed_when: (swap_used.stdout_lines[0] | int) > 100
+
+  - name: "Habilitar Selinux"
+    selinux:
+      policy: targeted
+      state: enforcing
+
+  - name: "Inicio Firewalld"
+    service:
+      name: firewalld
+      state: started
+
+  - name: "Puertos para OKD"
+    firewalld:
+      zone: public
+      state: enabled
+      permanent: yes
+      port: "{{ item }}"
+    notify: reload firewalld
+    with_items:
+      - "4789/udp"
+      - "443/tcp"
+      - "8443/tcp"
+      - "10250/tcp"
+      - "10010/tcp"
+      - "2049/udp"
+      - "2049/tcp"
+      - "2379/tcp"
+      - "2380/tcp"
+      - "9000/tcp"
+      - "8444/tcp"
+  
+  - name: "Inicio NetworkManager"
+    service:
+      name: NetworkManager
+      state: started
+
+  - name: "Enable NetworkManager"
+    service:
+      name: NetworkManager
+      enabled: yes
+  
+  handlers:
+  - name: reload firewalld
+    service:
+      name: firewalld
+      state: reloaded

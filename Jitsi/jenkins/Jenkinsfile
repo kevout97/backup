@@ -1,0 +1,68 @@
+///////////////////////////////////////////////////////////
+// Call trans opt: received. 2-19-98 13:24:18 REC:Loc
+//
+//      Trace program: running
+//
+//            wake up, Neo...
+//         the matrix has you
+//       follow the white rabbit.
+//
+//           knock, knock, Neo.
+//
+//                         (`.         ,-,
+//                         ` `.    ,;' /
+//                          `.  ,'/ .'
+//                           `. X /.'
+//                 .-;--''--.._` ` (
+//               .'            /   `
+//              ,           ` '   Q '
+//              ,         ,   `._    \
+//           ,.|         '     `-.;_'
+//           :  . `  ;    `  ` --,.._;
+//            ' `    ,   )   .'
+//               `._ ,  '   /_
+//                  ; ,''-,;' ``-
+//                   ``-..__``--`
+///////////////////////////////////////////////////////////
+node("jenkins-slave"){
+    stage("Clone Source") {
+        git credentialsId: 'git-key', url: 'ssh://bitbucket.org/dlaargentina/claro-connect-iam.git'
+    }
+
+    stage("Create BuildConfig"){
+        openshift.withCluster("https://172.26.90.131:8443","eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJidWlsZGVyLWplbmtpbnMiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy1kZXBsb3ktdG9rZW4tZm1qMmwiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiamVua2lucy1kZXBsb3kiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIxNzE2NmZhYi1iN2U1LTExZWEtOTE3YS0wMDUwNTYwMTBkMjMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6YnVpbGRlci1qZW5raW5zOmplbmtpbnMtZGVwbG95In0.A-NlyhPTbPJr76lo3IxHM7HkhupUmwKU00KFEbvdnV2Wg9SXz0R8q2qW1_ZFmcXonCS1j-pGZxSnnLfrNg8Tc85wPKjyZhhO5JwiqavJfPKxxNPf_IjdTAi5cPrAMPciGaEmznSL7h_35LPUR5ZSBYPHWIWB_zr_T5vs1Gn6zuMmhBV-UpAterlbWkTWCQMFeW55QqfDOPlspvV3r1gLSbcThdF_hhwJPiCcG_G0Cf3BoOEtpkZ3stUlogewC9W7RZHYKJd6yhtZ9pg7H4ci6qVoHvPeQ7_P5OUcBFhE2Muq5efbblYvcjnSiJ5p_bb0od46iMEMaM_nLb0RCu8diA"){
+            openshift.withProject("builder-jenkins"){
+                openshift.apply([
+                    "apiVersion": "v1",
+                    "kind": "BuildConfig",
+                    "metadata":[
+                        "name": "test-app2"
+                    ],
+                    "spec":[
+                        "source":[
+                            "type": "Binary"
+                        ],
+                        "output":[
+                            "to":[
+                                "kind": "DockerImage",
+                                "name": "docker.io/kevopsoficial/test-webapp:v3"
+                            ],
+                            "pushSecret":[
+                                "name": "docker-kevops"
+                            ]
+                        ],
+                        "strategy": [
+                            "type": "Docker"
+                        ]
+                    ]
+                ])
+            }
+        }
+    }
+
+    stage("Build Image") {
+        dir('Webapp') {
+            sh 'oc start-build test-app2 --from-dir . --follow'
+        }
+    }
+}

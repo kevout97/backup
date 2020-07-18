@@ -1,0 +1,32 @@
+# Playbook para realizar backup de la data de los etcd
+- hosts: etcd
+  become: yes
+  become_user: root
+  environment:
+    ETCD_POD_MANIFEST: /etc/origin/node/pods/etcd.yaml
+  tasks:
+  - name: "Login OKD"
+    shell: oc login -u system:admin
+    register: login
+
+  - name: "ETCD_EP"
+    shell: grep https $ETCD_POD_MANIFEST | cut -d '/' -f3
+    register: etcd_ep
+
+  - name: "ETCD_POD"
+    shell: oc get pods -n kube-system | grep -o -m 1 '\S*etcd\S*'
+    register: etcd_pod
+
+  - name: "Select project kube-system"
+    shell: oc project kube-system
+    register: project
+  
+  - debug: msg="ETCD_EP= {{ etcd_ep.stdout }}"
+  - debug: msg="ETCD_POD= {{ etcd_pod.stdout }}"
+  - debug: msg="Project= {{ project.stdout }}"
+
+  - name: "Backup etcd data"
+    shell: oc exec "{{ etcd_pod.stdout }}" -c etcd -- /bin/sh -c "ETCDCTL_API=3 etcdctl --cert /etc/etcd/peer.crt --key /etc/etcd/peer.key --cacert /etc/etcd/ca.crt --endpoints "{{ etcd_ep.stdout }}" snapshot save /var/lib/etcd/snapshot.db"
+    register: etcd_data
+
+  - debug: msg="{{ etcd_data.stdout }}"

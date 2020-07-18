@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: jenkins-pipeline-test
+spec:
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfile: |-
+        pipeline {
+          agent{ label "jenkins-slave" }
+          stages {
+            stage("Clone Source") {
+              steps {
+                sh 'git clone https://github.com/kevout97/Webapp.git'
+              }
+            }
+
+            stage("Create BuildConfig"){
+              openshift.withCluster("https://172.26.90.131:8443"){
+                openshift.withProject("jenkinsjitsi"){
+                    openshift.create([
+                      "apiVersion": "v1",
+                      "kind": "BuildConfig",
+                      "metadata":
+                        ["name": "web-build-app"],
+                      "spec":
+                        ["output":
+                          ["to":
+                            ["kind": "DockerImage",
+                            "name": "docker.io/kevopsoficial/webapp:v2"]],
+                          "pushSecret":
+                            ["name": "docker-kevops"],
+                        "strategy": 
+                          ["type": "Docker"]]
+                    ])
+                }
+              }
+            }
+
+            stage("Build Image") {
+              steps {
+                dir('Webapp') {
+                  sh 'oc start-build web-build-app --from-dir . --follow'
+                }
+              }
+            }
+          }
+        }
+    type: JenkinsPipeline

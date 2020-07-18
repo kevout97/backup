@@ -1,0 +1,40 @@
+name: Nombre del conector{
+    config{
+        connector.class: Clase java para la conexion ---> io.debezium​.connector.mysql.MySqlConnector
+        tasks.max: Numero maximo de tareas que el conector puede crear dentro de Mysql ---> 1
+        database.hostname: Ip o Hostname de la base de datos
+        database.port: Puerto de la base de datos
+        database.user: usuario para la conexion con la base de datos
+        database.password: password para la conexion
+        database.server.name: crea un espacio en los topics de kafka el cual particulariza a este conector, debe ser unico para cada conector
+        database.server.id: Id que asocia debezium a dicha base de datos, es util cuando se hace un monitoreo de la misma base desde otro servidor, su funcion se refleja cuando se tiene un cluster, evita monitoreos dobles.
+        database.history.kafka.topic: Nombre del topic en kafka
+        database.history​.kafka.bootstrap.servers: lista de servidores de kafka
+        database.whitelist: Nombre de las bases de datos que seran monitoreadas, por defecto se monitorean todas, deben estar separadas por una coma. Acepta expresiones regulares
+        database.blacklist: Nombre las bases de datos que no deben ser monitoreadas, el resto de bases de datos que no esten en esta lista seran monitoreadas. Acepta expresiones regulares
+        table.whitelist: similar a database.whitelist pero aplicado a tablas. debera colocarse el nombre qualificado de la tabla (nombrebase.nombretabla). Acepta expresiones regulares
+        table.blacklist: similar a database.blacklist pero aplicado a tablas. debera colocarse el nombre qualificado de la tabla (nombrebase.nombretabla). Acepta expresiones regulares
+        column.blacklist: similar a database.blacklist pero aplicado a columnas. debera colocarse el nombre qualificado de la columna (nombrebase.nombretabla.nombrecolumna). Acepta expresiones regulares
+        column.truncate.to.length.chars: indica a cuantos caracteres debera truncarse el valor de dicha columna durante el monitoreo de los eventos correspondientes a esa columan. sustituir la palabra length por un numero. debera colocarse el nombre qualificado de la columna (nombrebase.nombretabla.nombrecolumna). Acepta expresiones regulares
+        column.mask.with.length.chars: similar a column.truncate.to.length.chars pero en lugar de truncarlos sustituye los valores de las columnas por asteriscos. bastante util para el manejo de passwords.sustituir la palabra length por un numero.debera colocarse el nombre qualificado de la columna (nombrebase.nombretabla.nombrecolumna). Acepta expresiones regulares
+        column.propagate.source.type: Este no lo entendi bien, dice que agrega el tipo y tamaño original
+        datatype.propagate.source.type: Este es similar al anterior, tampoco lo entendi
+        time.precision.mode: representación del timestamp del evento, recomendable dejar adaptive_time_microseconds (default) ya que es el mas preciso.
+        decimal.handling.mode: Especifica como debe manejar los valores numericos el conector, el valor por defecto es precise el cual utiliza la clase de java java.math.BigDecimal, tambien esta el valor double que representa los datos en double, o string
+        bigint.unsigned.handling.mode: Representación de los tipos de datos BIGINT UNSIGNED, por defecto utiliza long quien usa la clase java java.math.BigDecimal, cuando el tamaño supera 2^63 bits se recomienda colocar el valor precise
+        include.schema.changes: Monitorea los cambios hechos al esquema de la base de datos. por defecto es true.
+        include.query: Este booleano permite mostrar dentro del evento el query que provo dicho evento. por defecto esta en false.
+        event.processing​.failure.handling.mode: Señala como debe actuar el conector ante excepciones ocasionadas por la deserialización de eventos binlog. por defecto esta el fail el cual provoca que en cada excepcion el conector se detenga, tambien esta warn el cual solo alerta del evento y finalmente skip el cual hace saso omiso.
+        inconsistent.schema.handling.mode: Specifies how the connector should react to binlog events that relate to tables that are not present in internal schema representation (i.e. internal representation is not consistent with database)
+        max.queue.size: Tamaño maximo del bloque que almacenara los eventos antes de escribirlos en Kafka, el valor debe ser positivo (default: 8192)
+        max.batch.size: Tamaño del lote de eventos que deben ser procesados, este valor debe ser menor a max.queue.size
+        poll.interval.ms: Tiempo que el conector espera antes de procesar el siguiente lote de eventos, por default esta en 1 segundo, el valor debe estar en milliseconds
+        connect.timeout.ms: Valor en milisegundos que el conector espera antes de declarar timeout al intentar conectarse a Mysql.
+        gtid.source.includes:
+        gtid.source.excludes:
+        tombstones.on.delete:
+        message.key.columns:
+
+
+    }
+}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jvpo1rednode01-svc
+spec:
+  selector:
+    redis-label: jvpo1rednode01
+  ports:
+  - name: 'redis-slave'
+    port: 6379
+    targetPort: 6379
+    protocol: TCP
+  type: ClusterIP

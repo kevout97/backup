@@ -1,0 +1,40 @@
+# Playbook para configurar Haproxy en el LB
+- hosts: lb
+  remote_user: ansible
+  become: yes
+  become_user: root
+  gather_facts: false
+  tasks:
+  - name: "Instalacion haproxy"
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - haproxy
+  - name: Stop haproxy service
+    service:
+        name: haproxy
+        state: stopped
+  - name: "haproxy.cfg"
+    copy:
+        src: "haproxy.cfg" # El archivo a distribuir
+        dest: /etc/haproxy/
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+  - name: Enable service haproxy
+    service:
+        name: haproxy
+        enabled: yes
+  - name: Enable Firewalld
+    service:
+        name: firewalld
+        enabled: yes
+  - name: Start service haproxy
+    service:
+        name: haproxy
+        state: started
+  - name: Start service firewalld
+    service:
+        name: firewalld
+        state: started

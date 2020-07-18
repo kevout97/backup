@@ -1,0 +1,11 @@
+url: ldap://ipaamx1-1.dcv.amx.gadt.amxdigital.net:389
+bindDN: uid=admin,cn=users,cn=accounts,dc=amx,dc=gadt,dc=amxdigital,dc=net 
+bindPassword: Afe8aeCh4e 
+insecure: true 
+
+baseDN: dc=amx,dc=gadt,dc=amxdigital,dc=net
+scope: sub 
+derefAliases: never 
+timeout: 0 
+filter: (objectClass=*) 
+pageSize: 0

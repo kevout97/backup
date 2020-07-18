@@ -1,0 +1,132 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 20 (0x14)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=MX, ST=CDMX, L=   , O=America Movil, OU=Canales Digitales, CN=America Movil CA/name=Master Canales Digitales CA/emailAddress=patricio@amxiniciativas.com
+        Validity
+            Not Before: Feb  8 00:19:13 2017 GMT
+            Not After : Feb  6 00:19:13 2027 GMT
+        Subject: C=MX, ST=CDMX, L=CDMX, O=America Movil, OU=Canales Digitales, CN=am-mark-i-inter-ca/name=America Movil Inter CA Mark I/emailAddress=patricio@amxiniciativas.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (4096 bit)
+                Modulus:
+                    00:e7:72:5f:d0:bd:cb:09:11:fe:64:a1:ec:b7:63:
+                    2f:22:f6:07:9f:bf:1a:c8:4f:1e:ea:bd:bc:c8:f4:
+                    3d:d4:0c:5f:27:36:9f:6f:2c:24:cb:85:99:f0:74:
+                    5b:1b:0e:1a:c5:50:61:1c:e7:4b:2a:88:ab:c3:6e:
+                    08:6b:6f:3b:33:2a:12:94:ad:43:86:9c:da:2d:1c:
+                    c7:42:cf:32:ad:ca:96:4a:98:31:e2:f2:a9:1d:63:
+                    4c:5a:77:45:41:9c:b4:e4:55:50:3a:73:9f:30:6b:
+                    03:43:8b:d6:b1:17:ed:0c:e7:1d:ef:b3:95:e5:59:
+                    c9:b8:c4:e3:ee:3a:4c:aa:eb:3e:80:a8:90:3d:f1:
+                    6a:38:d0:78:4c:fc:1b:f0:b5:57:f5:be:a3:0c:ce:
+                    b1:ce:10:72:d4:7a:74:18:14:73:7f:a0:65:34:c3:
+                    bb:ab:37:fd:d4:02:0e:0f:ed:ad:60:65:fa:aa:fd:
+                    e1:77:72:9a:84:cf:48:4e:2c:e2:05:49:fe:ec:40:
+                    f9:10:50:9f:5d:ab:bb:66:d2:c8:cb:dc:4f:ab:54:
+                    c5:6b:5e:2b:61:6d:8c:32:a2:67:e9:56:2c:77:f6:
+                    69:9f:5f:3a:cf:97:c4:0d:1a:ab:62:ea:c5:61:e3:
+                    45:3d:cf:29:6e:76:63:ce:0e:24:c6:f4:f6:60:cf:
+                    bf:4c:27:28:40:8a:01:9a:ab:cb:e2:40:f6:67:fa:
+                    13:a9:e6:97:6f:21:58:18:27:b1:89:04:f5:f7:e8:
+                    5b:9f:a6:b4:cc:81:46:ba:17:51:41:e1:e4:78:61:
+                    3d:0a:17:71:53:28:78:bf:9d:74:71:01:4e:9a:cc:
+                    3d:0c:d5:aa:a8:62:b2:ca:29:53:04:3a:6f:58:d7:
+                    b3:f1:7a:50:eb:e4:c7:35:44:73:82:2b:15:99:47:
+                    d6:66:7d:91:18:2b:03:8c:ee:a0:f4:15:7a:6d:31:
+                    5c:df:5e:a5:16:7e:45:c5:37:8a:21:8e:d0:dc:d9:
+                    fa:f3:f9:20:d1:0a:80:5b:c7:25:25:65:21:b7:42:
+                    64:1e:4e:f0:26:6b:01:95:30:41:ab:4c:f2:45:eb:
+                    d8:e4:3a:14:82:ea:9e:69:21:ca:9c:a7:82:86:63:
+                    eb:ef:90:7e:0d:50:6e:8b:99:cd:84:a3:8d:23:df:
+                    d8:8b:ea:cc:86:bc:7e:77:8b:89:69:d9:54:01:10:
+                    49:69:1f:e0:ef:7f:8c:3e:3a:cf:3a:7e:4f:8d:d1:
+                    03:33:af:05:5d:a6:30:b8:1e:d4:9f:5c:0e:e0:57:
+                    94:d1:ac:9e:e1:be:75:ef:58:13:59:69:90:dc:d1:
+                    83:ca:0f:76:43:7e:1f:dc:52:62:3f:fa:f6:a5:22:
+                    30:48:e9
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                D4:FB:90:D1:2A:04:FC:D6:E9:EC:40:AA:95:C9:F1:E1:D2:17:01:BD
+            X509v3 Authority Key Identifier: 
+                keyid:7F:D2:2E:87:7A:A5:AC:D7:11:E6:25:39:A3:A8:00:5E:54:1D:9A:B7
+                DirName:/C=MX/ST=CDMX/L=   /O=America Movil/OU=Canales Digitales/CN=America Movil CA/name=Master Canales Digitales CA/emailAddress=patricio@amxiniciativas.com
+                serial:E5:DF:8C:FD:08:E5:8B:FC
+
+            X509v3 Basic Constraints: 
+                CA:TRUE
+    Signature Algorithm: sha256WithRSAEncryption
+         a3:40:95:c5:b1:5a:e0:89:24:5f:5d:31:8c:99:d7:37:ca:dc:
+         fd:0f:ad:50:4b:4f:c5:e3:00:59:97:82:2c:8b:8e:2b:e7:af:
+         0e:d1:75:6f:14:fa:2b:48:58:70:d0:d7:4c:41:68:94:9c:1a:
+         0a:74:90:2c:a8:c4:76:e8:7f:c6:39:47:2f:55:f1:6f:ad:0d:
+         f1:1f:52:1f:31:d1:f6:92:7e:9f:fe:cc:d8:96:55:72:58:3d:
+         45:50:f8:14:f9:e9:0b:6e:93:f2:ae:37:f3:4f:73:89:63:9c:
+         30:3a:8f:68:c8:0b:cf:91:82:c2:c4:2f:44:08:e9:b3:2a:de:
+         da:34:fe:9c:8c:f8:d6:ed:a3:3d:9f:37:e1:df:46:d2:ef:3e:
+         f5:0e:bf:85:f9:90:d8:ca:5b:d6:b5:7c:8a:d5:4d:c0:8e:1b:
+         ca:80:dd:41:5f:9e:28:5b:f3:9d:d5:aa:42:79:07:ff:de:57:
+         17:1b:55:e5:5b:5e:63:96:89:79:64:f7:36:95:b5:de:30:d6:
+         a7:8b:27:d9:75:7b:e7:f9:78:8c:1b:01:9a:6c:be:8c:15:8c:
+         59:ed:b0:a4:c5:16:a8:8f:95:b1:d4:06:ec:42:ed:0e:3a:dc:
+         90:0c:52:b7:4e:c6:f7:d5:b7:62:c9:19:71:e7:c7:0c:59:e8:
+         cf:6a:97:bb:24:04:bd:ed:dd:0a:8e:b1:e6:0a:cb:1b:4a:c4:
+         17:27:72:0c:34:4c:57:79:e6:eb:ae:4d:1d:ed:64:cb:2b:18:
+         6a:9c:68:e7:21:13:80:84:3a:66:cc:01:02:d3:97:e0:73:ee:
+         cc:98:7c:92:d6:57:22:b3:72:d7:9f:e8:74:c1:28:e5:74:49:
+         b0:c2:fd:44:c0:9d:5e:55:d2:ae:c1:cb:fa:ec:0c:b5:12:90:
+         7a:75:8d:58:43:60:4c:7b:e0:83:2b:a9:3f:14:ac:83:1f:ec:
+         49:ab:d9:80:51:ce:65:24:46:36:e8:7a:75:69:83:c0:20:01:
+         f2:f2:c5:26:52:35:de:9b:79:d7:42:29:36:ea:8b:46:6d:4a:
+         7c:c1:f5:22:49:9a:62:c8:42:da:be:a4:5f:34:d5:77:76:fb:
+         c1:d4:2c:26:ec:00:cf:ca:58:d8:5a:ef:60:eb:d5:97:74:bb:
+         88:53:39:ee:8a:2e:bf:e7:50:99:c3:9c:e3:ac:da:68:f6:7f:
+         ab:87:2f:3e:b6:05:96:e1:80:f2:7e:e5:1e:9e:85:60:fd:65:
+         55:ed:6f:30:09:a3:e8:22:c2:da:d5:ef:9a:42:a7:5b:75:69:
+         80:f3:1b:87:10:b1:2a:57:c5:91:3f:bb:c7:8a:ba:b9:2a:c2:
+         a2:f6:29:78:bb:01:91:75
+-----BEGIN CERTIFICATE-----
+MIIHTzCCBTegAwIBAgIBFDANBgkqhkiG9w0BAQsFADCByzELMAkGA1UEBhMCTVgx
+DTALBgNVBAgTBENETVgxDDAKBgNVBAcTAyAgIDEWMBQGA1UEChMNQW1lcmljYSBN
+b3ZpbDEaMBgGA1UECxMRQ2FuYWxlcyBEaWdpdGFsZXMxGTAXBgNVBAMTEEFtZXJp
+Y2EgTW92aWwgQ0ExJDAiBgNVBCkTG01hc3RlciBDYW5hbGVzIERpZ2l0YWxlcyBD
+QTEqMCgGCSqGSIb3DQEJARYbcGF0cmljaW9AYW14aW5pY2lhdGl2YXMuY29tMB4X
+DTE3MDIwODAwMTkxM1oXDTI3MDIwNjAwMTkxM1owgdAxCzAJBgNVBAYTAk1YMQ0w
+CwYDVQQIEwRDRE1YMQ0wCwYDVQQHEwRDRE1YMRYwFAYDVQQKEw1BbWVyaWNhIE1v
+dmlsMRowGAYDVQQLExFDYW5hbGVzIERpZ2l0YWxlczEbMBkGA1UEAxMSYW0tbWFy
+ay1pLWludGVyLWNhMSYwJAYDVQQpEx1BbWVyaWNhIE1vdmlsIEludGVyIENBIE1h
+cmsgSTEqMCgGCSqGSIb3DQEJARYbcGF0cmljaW9AYW14aW5pY2lhdGl2YXMuY29t
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA53Jf0L3LCRH+ZKHst2Mv
+IvYHn78ayE8e6r28yPQ91AxfJzafbywky4WZ8HRbGw4axVBhHOdLKoirw24Ia287
+MyoSlK1DhpzaLRzHQs8yrcqWSpgx4vKpHWNMWndFQZy05FVQOnOfMGsDQ4vWsRft
+DOcd77OV5VnJuMTj7jpMqus+gKiQPfFqONB4TPwb8LVX9b6jDM6xzhBy1Hp0GBRz
+f6BlNMO7qzf91AIOD+2tYGX6qv3hd3KahM9ITiziBUn+7ED5EFCfXau7ZtLIy9xP
+q1TFa14rYW2MMqJn6VYsd/Zpn186z5fEDRqrYurFYeNFPc8pbnZjzg4kxvT2YM+/
+TCcoQIoBmqvL4kD2Z/oTqeaXbyFYGCexiQT19+hbn6a0zIFGuhdRQeHkeGE9Chdx
+Uyh4v510cQFOmsw9DNWqqGKyyilTBDpvWNez8XpQ6+THNURzgisVmUfWZn2RGCsD
+jO6g9BV6bTFc316lFn5FxTeKIY7Q3Nn68/kg0QqAW8clJWUht0JkHk7wJmsBlTBB
+q0zyRevY5DoUguqeaSHKnKeChmPr75B+DVBui5nNhKONI9/Yi+rMhrx+d4uJadlU
+ARBJaR/g73+MPjrPOn5PjdEDM68FXaYwuB7Un1wO4FeU0aye4b5171gTWWmQ3NGD
+yg92Q34f3FJiP/r2pSIwSOkCAwEAAaOCATUwggExMB0GA1UdDgQWBBTU+5DRKgT8
+1unsQKqVyfHh0hcBvTCCAQAGA1UdIwSB+DCB9YAUf9Iuh3qlrNcR5iU5o6gAXlQd
+mrehgdGkgc4wgcsxCzAJBgNVBAYTAk1YMQ0wCwYDVQQIEwRDRE1YMQwwCgYDVQQH
+EwMgICAxFjAUBgNVBAoTDUFtZXJpY2EgTW92aWwxGjAYBgNVBAsTEUNhbmFsZXMg
+RGlnaXRhbGVzMRkwFwYDVQQDExBBbWVyaWNhIE1vdmlsIENBMSQwIgYDVQQpExtN
+YXN0ZXIgQ2FuYWxlcyBEaWdpdGFsZXMgQ0ExKjAoBgkqhkiG9w0BCQEWG3BhdHJp
+Y2lvQGFteGluaWNpYXRpdmFzLmNvbYIJAOXfjP0I5Yv8MAwGA1UdEwQFMAMBAf8w
+DQYJKoZIhvcNAQELBQADggIBAKNAlcWxWuCJJF9dMYyZ1zfK3P0PrVBLT8XjAFmX
+giyLjivnrw7RdW8U+itIWHDQ10xBaJScGgp0kCyoxHbof8Y5Ry9V8W+tDfEfUh8x
+0faSfp/+zNiWVXJYPUVQ+BT56Qtuk/KuN/NPc4ljnDA6j2jIC8+RgsLEL0QI6bMq
+3to0/pyM+Nbtoz2fN+HfRtLvPvUOv4X5kNjKW9a1fIrVTcCOG8qA3UFfnihb853V
+qkJ5B//eVxcbVeVbXmOWiXlk9zaVtd4w1qeLJ9l1e+f5eIwbAZpsvowVjFntsKTF
+FqiPlbHUBuxC7Q463JAMUrdOxvfVt2LJGXHnxwxZ6M9ql7skBL3t3QqOseYKyxtK
+xBcncgw0TFd55uuuTR3tZMsrGGqcaOchE4CEOmbMAQLTl+Bz7syYfJLWVyKzctef
+6HTBKOV0SbDC/UTAnV5V0q7By/rsDLUSkHp1jVhDYEx74IMrqT8UrIMf7Emr2YBR
+zmUkRjboenVpg8AgAfLyxSZSNd6beddCKTbqi0ZtSnzB9SJJmmLIQtq+pF801Xd2
++8HULCbsAM/KWNha72Dr1Zd0u4hTOe6KLr/nUJnDnOOs2mj2f6uHLz62BZbhgPJ+
+5R6ehWD9ZVXtbzAJo+giwtrV75pCp1t1aYDzG4cQsSpXxZE/u8eKurkqwqL2KXi7
+AZF1
+-----END CERTIFICATE-----

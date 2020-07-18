@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-jp-conf-jicofo-cm
+data: 
+  JICOFO_HOST: "localhost"
+  JICOFO_HOSTNAME: "claroconnect.com"
+  JICOFO_PORT: "5347"
+  JICOFO_AUTH_DOMAIN: "auth.claroconnect.com"
+  JICOFO_AUTH_USER: "focus"
+  JICOFO_BRIDGE_MUC: "JvbBrewery@internal.auth.claroconnect.com"

@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJkb2NrZXItc291cmNlLXJlZ2lzdHJ5LmFteGRpZ2l0YWwubmV0IjogewoJCQkiYXV0aCI6ICJiMnRsWVc0dGJ5MXRjbXN0YVRwTllYSnJYMlJwYzJOdk9VaHZiR1JtYjNKbGMzUXlibUZ3YTJsdSIKCQl9Cgl9Cn0K
+kind: Secret
+metadata:
+  name: registry-amx
+type: kubernetes.io/dockerconfigjson

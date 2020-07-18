@@ -1,0 +1,20 @@
+##############################################################################
+# IBM WebSphere Portal configuration helper file for script EnableFederatedLDAPSecurity. 
+##############################################################################
+federated.ldap.baseDN=%BASE_DN%
+federated.ldap.bindDN=uid=wpsbind,cn=users,%BASE_DN%
+federated.ldap.bindPassword=%WPSBINDPWD%
+federated.ldap.et.group.objectClasses=groupOfUniqueNames
+federated.ldap.et.group.objectClassesForCreate=
+federated.ldap.et.group.searchBases=cn=groups,%BASE_DN%
+federated.ldap.et.personaccount.objectClasses=inetorgperson
+federated.ldap.et.personaccount.objectClassesForCreate=
+federated.ldap.et.personaccount.searchBases=cn=users,%BASE_DN%
+federated.ldap.gm.dummyMember=uid=dummy
+federated.ldap.gm.groupMemberName=uniqueMember
+federated.ldap.gm.objectClass=groupOfUniqueNames
+federated.ldap.gm.scope=direct
+federated.ldap.host=%LDAPHOSTNAME%
+federated.ldap.id=%LDAPHOSTNAME%
+federated.ldap.ldapServerType=IDS6
+federated.ldap.port=389

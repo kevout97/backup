@@ -1,0 +1,29 @@
+apiVersion: "v1"
+kind: "BuildConfig"
+metadata:
+  name: "web-app"
+spec:
+  output:
+    to:
+      kind: "DockerImage"
+      name: "docker.io/kevopsoficial/webapp:latest"
+    pushSecret:
+      name: "docker-kevops"
+  source:
+    git:
+      uri: "https://github.com/kevout97/Webapp.git"
+  strategy: 
+    # from:
+    #   kind: "DockerImage"
+    #   name: "docker.io/user/private_repository"
+    # pullSecret:
+    #   name: "dockerhub"
+    type: Docker
+
+# apiVersion: v1
+# kind: ImageStream
+# metadata:
+#   labels:
+#     app: webapp
+#   name: webapp
+# spec: {}

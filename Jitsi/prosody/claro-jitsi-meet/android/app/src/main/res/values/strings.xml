@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name" translatable="false">Join Talks</string>
+    <string name="content_description_splash_icon" translatable="false">Splash icon</string>
+    <string name="option_start_express_conference" translatable="false">Start Conference</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+
+    <string name="title_no_network_connection">Service not available</string>
+    <string name="body_no_network_connection">Your device may be without an internet connection or the server may be experiencing problems.</string>
+    <string name="btn_try_again">Try again</string>
+    <string name="btn_exit">Exit</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <string name="notification_error_ssl_cert_invalid">The connection could be insecure. Do you want to continue anyway?</string>
+
+</resources>

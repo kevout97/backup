@@ -1,0 +1,254 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+boolean googleServicesEnabled \
+    = project.file('google-services.json').exists() && !rootProject.ext.libreBuild
+
+// Crashlytics integration is done as part of Firebase now, so it gets
+// automagically activated with google-services.json
+if (googleServicesEnabled) {
+    apply plugin: 'io.fabric'
+}
+
+// Use the number of seconds/10 since Jan 1 2019 as the versionCode.
+// This lets us upload a new build at most every 10 seconds for the
+// next ~680 years.
+// https://stackoverflow.com/a/38643838
+def vcode = (int)(((new Date().getTime()/1000) - 1546297200) / 10)
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId 'com.yourconf.android'
+        versionCode vcode
+        versionName project.appVersion
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "GOOGLE_SERVICES_ENABLED", "${googleServicesEnabled}"
+            buildConfigField "boolean", "LIBRE_BUILD", "${rootProject.ext.libreBuild}"
+            buildConfigField "String", "WEB_VIEW_URL", "\"https://beta.claroconnect.com/iam/login\""
+            buildConfigField "String", "WEB_VIEW_URL_MANAGEMENT", "\"https://beta.claroconnect.com/iam/management\""
+            buildConfigField "String", "WEB_VIEW_URL_CONGRATULATIONS", "\"https://beta.claroconnect.com/iam/congrats\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://beta.claroconnect.com/video\""
+            buildConfigField "String", "CLIENT_ID_SERVER", "\"86057329456-vm89ue5cd2jsbv2h1cqjl2kl2dmo896b.apps.googleusercontent.com\""
+            buildConfigField "String", "SCOPE_CALENDAR_GOOGLE", "\"https://www.googleapis.com/auth/calendar\""
+
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-release.pro'
+            buildConfigField "boolean", "GOOGLE_SERVICES_ENABLED", "${googleServicesEnabled}"
+            buildConfigField "boolean", "LIBRE_BUILD", "${rootProject.ext.libreBuild}"
+            buildConfigField "String", "WEB_VIEW_URL", "\"https://beta.claroconnect.com/iam/login\""
+            buildConfigField "String", "WEB_VIEW_URL_MANAGEMENT", "\"https://beta.claroconnect.com/iam/management\""
+            buildConfigField "String", "WEB_VIEW_URL_CONGRATULATIONS", "\"https://beta.claroconnect.com/iam/congrats\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://beta.claroconnect.com/video\""
+            buildConfigField "String", "CLIENT_ID_SERVER", "\"86057329456-vm89ue5cd2jsbv2h1cqjl2kl2dmo896b.apps.googleusercontent.com\""
+            buildConfigField "String", "SCOPE_CALENDAR_GOOGLE", "\"https://www.googleapis.com/auth/calendar\""
+
+            //signingConfig signingConfigs.release
+        }
+    }
+
+    /*
+    flavorDimensions "version"
+    productFlavors {
+        local {
+            dimension "version"
+
+            buildConfigField "String", "WEB_VIEW_URL", "\"http://192.168.221.69:3000/login\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://test-jitsi.claroconnect.com\""
+        }
+
+        development {
+            dimension "version"
+
+            buildConfigField "String", "WEB_VIEW_URL", "\"https://beta.claroconnect.com/iam/login\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://beta.claroconnect.com/video\""
+        }
+
+        meetjit {
+            dimension "version"
+
+            buildConfigField "String", "WEB_VIEW_URL", "\"https://beta.claroconnect.com/iam/login\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://meet.jit.si\""
+        }
+
+        production {
+            dimension "version"
+
+            buildConfigField "String", "WEB_VIEW_URL", "\"https://beta.claroconnect.com/iam/login\""
+            buildConfigField "String", "CONFERENCE_SERVER_URL", "\"https://meet.jit.si\""
+        }
+    }
+    */
+
+    sourceSets {
+        main {
+            java {
+                if (rootProject.ext.libreBuild) {
+                    srcDir "src"
+                    exclude "**/GoogleServicesHelper.java"
+                }
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':appcenter-crashes')
+    implementation project(':appcenter-analytics')
+    implementation project(':appcenter')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    if (!rootProject.ext.libreBuild) {
+        implementation 'com.google.android.gms:play-services-auth:16.0.1'
+
+        // Firebase
+        //  - Crashlytics
+        //  - Dynamic Links
+        implementation 'com.google.firebase:firebase-core:16.0.6'
+        implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+        implementation 'com.google.firebase:firebase-dynamic-links:16.1.5'
+    }
+
+    implementation project(':sdk')
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+    implementation "androidx.core:core-ktx:1.2.0"
+    //Live Data
+    implementation "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+gradle.projectsEvaluated {
+    // Dropbox integration
+    //
+
+    def dropboxAppKey
+    if (project.file('dropbox.key').exists()) {
+        dropboxAppKey = project.file('dropbox.key').text.trim() - 'db-'
+    }
+
+    if (dropboxAppKey) {
+        android.defaultConfig.resValue('string', 'dropbox_app_key', "${dropboxAppKey}")
+
+        def dropboxActivity = """
+          <activity
+              android:configChanges="keyboard|orientation"
+              android:launchMode="singleTask"
+              android:name="com.dropbox.core.android.AuthActivity">
+            <intent-filter>
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <data android:scheme="db-${dropboxAppKey}" />
+            </intent-filter>
+          </activity>"""
+
+        android.applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                output.getProcessManifestProvider().get().doLast {
+                    def outputDir = manifestOutputDirectory.get().asFile
+                    def manifestPath = new File(outputDir, 'AndroidManifest.xml')
+                    def charset = 'UTF-8'
+                    def text
+                    text = manifestPath.getText(charset)
+                    text = text.replace('</application>', "${dropboxActivity}</application>")
+                    manifestPath.write(text, charset)
+                }
+            }
+        }
+    }
+
+    // Run React packager
+    android.applicationVariants.all { variant ->
+        def targetName = variant.name.capitalize()
+
+        def currentRunPackagerTask = tasks.create(
+                name: "run${targetName}ReactPackager",
+                type: Exec) {
+            group = "react"
+            description = "Run the React packager."
+
+            doFirst {
+                println "Starting the React packager..."
+
+                def androidRoot = file("${projectDir}/../")
+
+                // Set up the call to the script
+                workingDir androidRoot
+
+                // Run the packager
+                commandLine("scripts/run-packager.sh")
+            }
+
+            // Set up dev mode
+            def devEnabled = !targetName.toLowerCase().contains("release")
+
+            // Only enable for dev builds
+            enabled devEnabled
+        }
+
+        def packageTask = variant.packageApplicationProvider.get()
+
+        packageTask.dependsOn(currentRunPackagerTask)
+    }
+
+}
+
+if (googleServicesEnabled) {
+   apply plugin: 'com.google.gms.google-services'
+}

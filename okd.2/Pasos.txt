@@ -1,0 +1,80 @@
+# En el nodo App2
+systemctl start NetworkManager
+systemctl enable NetworkManager
+
+# Eliminar nodos
+oc adm drain <nodo> --force=true --ignore-daemonsets
+oc delete node <nodo> 
+## En el Nodo
+rm -rf /etc/origin/*
+rm -rf /var/lib/origin/*
+docker system prune
+# Colocar el dns original, porque OKD lo cambia
+
+# Para los etcd
+rm -rf /var/lib/etcd/*
+
+
+# En al Ansible
+cd ~/openshift-ansible
+nohup ansible-playbook -vvvv -i ~/okd/playbooks/0.inventory-vcloud-scaleup playbooks/openshift-master/openshift_node_group.yml &
+nohup ansible-playbook -vvvv -i ~/okd/playbooks/0.inventory-vcloud-scaleup playbooks/openshift-node/scaleup.yml &
+git clone -b openshift-ansible-3.11.4-1 https://github.com/openshift/openshift-ansible.git openshift-ansible-3.11.4-1
+
+#Error
+start_network.go:106] could not start DNS, unable to read config file: open /etc/origin/node/resolv.conf: no such file or directory
+echo "nameserver 10.10.26.3" > /etc/origin/node/resolv.conf
+# Solucion
+# crear el archivo con apuntando al dns que se configuro en un principio
+
+## En el app02
+yum remove etcd -y 
+yum install etcd -y
+
+yum remove dnsmasq -y
+yum install dnsmasq -y
+
+yum remove docker -y
+yum install docker -y
+
+##############
+Escalando los master
+
+"msg": "The task includes an option with an undefined variable. The error was: 'openshift_is_atomic' is undefined\n\nThe error appears to be in '/home/ansible/openshift-ansible/playbooks/init/basic_facts.yml': line 102, column 5, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n
+Agregar 
+openshift_is_atomic=false
+
+##########
+nohup ansible-playbook -vvvv -i ~/okd/playbooks/0.inventory-vcloud-scaleup playbooks/openshift-master/openshift_node_group.yml &
+nohup ansible-playbook -vvvv -i ~/okd/playbooks/0.inventory-vcloud-scaleup playbooks/openshift-etcd/scaleup.yml &
+
+################
+nohup ansible-playbook -vvvv -i ~/okd/playbooks/0.inventory-vcloud playbooks/adhoc/uninstall.yml &
+ansible -a "bash -c 'ls /etc/origin'" -i ~/okd/playbooks/0.inventory-vcloud -b all
+ansible -a "bash -c 'ls /var/lib/origin'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'ls /var/lib/etcd'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'cat /etc/resolv.conf'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'echo -e \"search okd.cs.gadt.amxdigital.net\nnameserver 10.10.26.3\" > /etc/resolv.conf'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'docker images'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'docker ps -a'" -i ~/okd/playbooks/0.inventory-vcloud -b all 
+ansible -a "bash -c 'sync; echo 3 > /proc/sys/vm/drop_caches'" -i ~/okd/playbooks/0.inventory-vcloud -b all
+
+################
+
+ansible-playbook -i ~/okd/playbooks/0.inventory-vcloud -b ~/okd/playbooks/1.preparing-hosts.yml -v
+ansible-playbook -i ~/okd/playbooks/0.inventory-vcloud -b ~/okd/playbooks/3.preparing-host-lb.yml -v
+
+#################
+
+
+
+Elimine docker y lo volvi a instalar, elimine /var/lib/docker
+Elimine lo que hay en /var/lib/etcd
+detuve dnsmasq
+detuve rcpbind
+
+etcdctl -C \
+    https://okdapp02.okd.cs.gadt.amxdigital.net:2379,https://okdmast01.okd.cs.gadt.amxdigital.net:2379 \
+    --ca-file=/etc/etcd/ca.crt \
+    --cert-file=/etc/etcd/server.crt \
+    --key-file=/etc/etcd/server.key cluster-health

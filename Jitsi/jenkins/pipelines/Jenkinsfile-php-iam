@@ -1,0 +1,179 @@
+///////////////////////////////////////////////////////////
+// Call trans opt: received. 2-19-98 13:24:18 REC:Loc    //
+//                                                       //
+//      Trace program: running                           //
+//                                                       //
+//            wake up, Neo...                            //
+//         the matrix has you                            //
+//       follow the white rabbit.                        //
+//                                                       //
+//           knock, knock, Neo.                          //
+//                                                       //
+//                         (`.         ,-,               //
+//                         ` `.    ,;' /                 //
+//                          `.  ,'/ .'                   //
+//                           `. X /.'                    //
+//                 .-;--''--.._` ` (                     //
+//               .'            /   `                     //
+//              ,           ` '   Q '                    //
+//              ,         ,   `._    \                   //
+//           ,.|         '     `-.;_'                    //
+//           :  . `  ;    `  ` --,.._;                   //
+//            ' `    ,   )   .'                          //
+//               `._ ,  '   /_                           //
+//                  ; ,''-,;' ``-                        //
+//                   ``-..__``--`                        //
+///////////////////////////////////////////////////////////
+
+GIT_URL_CCW           = "ssh://bitbucket.org/dlaargentina/claro-connect-web.git"
+GIT_URL_CCIF          = "ssh://bitbucket.org/dlaargentina/claro-connect-iam-front.git"
+GIT_URL_CCJM          = "ssh://bitbucket.org/dlaargentina/claro-jitsi-meet.git"
+GIT_URL_CCI           = "ssh://bitbucket.org/dlaargentina/claro-connect-iam.git"
+OKD_API               = "https://172.26.90.131:8443"
+OKD_KEY_API_JITSI     = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJqaXRzaS1jbGFyb2Nvbm5lY3QiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi0yeG5jNSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiNzRhZjQyOWEtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmppdHNpLWNsYXJvY29ubmVjdDpqZW5raW5zIn0.R_YHcPOKpZDZzPbpm3j1f1QxKnFWF3qYXJuw-226U4uOsb9duu3neGGQZnG3vF_SuH1newM-hWtEXwVpCveDEJqEH_-ao6VkQcoHxMfWYI3w12kQUEJLukJr7jgIwLFC4n34pP4bn3CaS0G0zECO-L88CmGScUet6xWjeYuvXrqsd5y3KpXnyYdedN72-w6Prw1j2LPhpj57UU6N8RjRVKsr47X_2JUM-22UMlCTZO5Sc3ny-g5BXxASkHYBGjwsOuHgDawlSWOQRC244LCogCvoawM1U98u-9ORdCA2Elqhhspo7hrmpK8Y2EyEHdgeYv58CxeU2oHc2OsMa04yIA'
+OKD_KEY_API_CCMKBUILD = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJjY21rYnVpbGQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiamVua2lucy10b2tlbi1qamw0aiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJqZW5raW5zIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMzI0M2JmNjAtYmJkNC0xMWVhLThlYmQtMDA1MDU2MDEwZDIzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OmNjbWtidWlsZDpqZW5raW5zIn0.sH4V176b8REzPDuzgM47yZWNufbWYqiNuXBwPTTu6VAvzYaMMDOYaQMxYknBWPl0GyzROEw05jQkBU6VnywcGzaldWMN4unm_2bupW6I22JFaRgpEkIKMeiBlCjelRRsAOpcp44RGlLR2ti9s6_ps-j7xToyKTsmmuKzBmWHDMdFXVkNctXhO3NU0P4B5blCHKU4-g8cU5meJpcAGwSoCXi8vYWWXPkkqhwIkgtZ5ugHa-62zkWnK2fB-LUZzg25FkYmpHly1EujceEUyLLoK9lwnsSvzoGbisQ98ZkoKl9eDGBVuCvbwkIYx-8Px6_fQ1NfCdsWr3dinD0-Vwfx0A'
+REMOTE_RO_REGISTRY  = "docker-source-registry.amxdigital.net"
+REMOTE_RO_REGISTRY_SECRET = "registry-amx"
+
+node("jenkins-ccmkbuild"){
+
+def buildConfigTemplate = [
+    "apiVersion": "v1",
+    "kind": "BuildConfig",
+    "metadata":[
+        "name": "${env.BUILD_TAG}"
+    ],
+    "spec":[
+        "source":[
+            "type": "Binary"
+        ],
+        "output":[
+            "to":[
+                "kind": "DockerImage",
+                "name": "${REMOTE_RO_REGISTRY}/${env.JOB_NAME}:v${env.BUILD_NUMBER}"
+            ],
+            "pushSecret":[
+                "name": "${REMOTE_RO_REGISTRY_SECRET}"
+            ]
+        ],
+        "strategy": [
+            "type": "Docker"
+        ]
+    ]
+]
+
+    stage("Clone Repository"){
+        sh """#!/bin/bash -x
+        mkdir claro-connect-web
+        mkdir claro-connect-iam-front
+        mkdir claro-jitsi-meet
+        mkdir claro-connect-iam
+        """
+        dir("claro-connect-web"){
+            git credentialsId: 'git-key', url: "${GIT_URL_CCW}"
+        }
+        dir("claro-connect-iam-front"){
+            git credentialsId: 'git-key', url: "${GIT_URL_CCIF}"
+        }
+        dir("claro-jitsi-meet"){
+            git credentialsId: 'git-key', url: "${GIT_URL_CCJM}"
+        }
+        dir("claro-connect-iam"){
+            git credentialsId: 'git-key', url: "${GIT_URL_CCI}"
+        }
+    }
+
+    stage("Prepare build"){
+        sh """
+cat<<- EOF > Dockerfile
+FROM docker-source-registry.amxdigital.net/atomic-rhel7-nginx-php-fpm72
+
+RUN curl https://repos.amxdigital.net/rhel-server-rhscl-7-rpms.repo  -o /etc/yum.repos.d/rhel-server-rhscl-7-rpms.repo && curl https://repos.amxdigital.net/rhel-7-server-rpms.repo -o /etc/yum.repos.d/rhel-7-server-rpms.repo
+RUN microdnf clean all \
+    && microdnf install -y zip unzip git zlib-devel libcurl-devel openssl-devel libxml2-devel rh-php72-php-devel pcre-devel yum gcc \
+    && microdnf clean all \
+    && yum install -y https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/libraqm-0.7.0-4.el7.x86_64.rpm ; yum clean all \
+    && yum install -y https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-libs-7.0.10-22.x86_64.rpm ; yum clean all \
+    && yum install -y https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-7.0.10-22.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libwebp-devel-0.3.0-7.el7.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/lcms2-devel-2.6-3.el7.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/libgs-devel-9.25-2.el7_7.3.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/openjpeg2-tools-2.3.1-3.el7_7.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/openjpeg2-devel-2.3.1-3.el7_7.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/ilmbase-devel-1.0.3-7.el7.x86_64.rpm ; yum clean all \
+    && yum install -y http://mirror.centos.org/centos/7/os/x86_64/Packages/OpenEXR-devel-1.7.1-7.el7.x86_64.rpm ; yum clean all \
+    && yum install -y https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-devel-7.0.10-22.x86_64.rpm ; yum clean all \
+    && yum install -y https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/libmcrypt-2.5.8-13.el7.x86_64.rpm ; yum clean all \
+    && yum install https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/l/libmcrypt-devel-2.5.8-13.el7.x86_64.rpm -y ; yum clean all \
+    && pecl channel-update pecl.php.net \
+    && pecl install imagick \
+    && pecl install mcrypt \
+    && pecl install mongodb \
+    && echo "extension=mongodb.so" >> /etc/opt/rh/rh-php72/php.ini \
+    && echo "extension=mcrypt.so" >> /etc/opt/rh/rh-php72/php.ini \
+    && echo "extension=imagick.so" >> /etc/opt/rh/rh-php72/php.ini \
+    && sed -i 's/allow_url_fopen.*/allow_url_fopen = On/g' /etc/opt/rh/rh-php72/php.ini \
+    && microdnf remove \
+        autoconf \
+        automake \
+        cpp \
+        gcc \
+        gcc-c++\
+        glibc-devel \
+        glibc-headers \
+        libmpc \
+        m4 \
+        mpfr \
+        openssl-devel \
+        pcre-devel \
+        rh-php72-php-devel \
+        yum  \
+        libwebp-devel \
+        lcms2-devel \
+        libgs-devel \
+        openjpeg2-devel \
+        ilmbase-devel \
+        OpenEXR-devel \
+        ImageMagick-devel \
+        libselinux-devel \
+        krb5-devel \
+        libmcrypt-devel \
+    && microdnf clean all
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+
+ADD claro-connect-web /var/www/claro-connect-web
+ADD claro-connect-iam-front /var/www/claro-connect-iam-front
+ADD claro-jitsi-meet /var/www/claro-jitsi-meet
+ADD claro-connect-iam /var/www/iam
+
+WORKDIR /var/www/iam
+RUN chown -R apache:apache /var/www/iam \
+    && chmod -R 755 /var/www/iam/storage \
+    && composer dump-autoload --optimize
+
+EXPOSE 9000
+
+ENTRYPOINT [ "/sbin/docker-entrypoint.sh" ]
+EOF
+"""
+        openshift.withCluster("${OKD_API}","${OKD_KEY_API_CCMKBUILD}"){
+            openshift.withProject("ccmkbuild"){
+                openshift.apply(buildConfigTemplate)
+            }
+        }
+    }
+
+    // Build image
+    stage("Building image"){
+        sh "oc set build-secret --pull bc/${env.BUILD_TAG} registry-amx"
+        sh "oc start-build ${env.BUILD_TAG} --from-dir . --follow"
+    }
+
+    // Clean objects
+    stage("Clean Object"){
+        sh "oc delete bc ${env.BUILD_TAG}"
+    }
+}

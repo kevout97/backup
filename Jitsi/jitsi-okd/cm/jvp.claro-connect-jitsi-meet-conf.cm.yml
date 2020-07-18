@@ -1,0 +1,14 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-claro-jitsi-meet-cm
+data: 
+  claro-jitsi-meet.conf: |
+    server {
+      listen   80;
+      server_name claro-jitsi-meet;
+        location / {
+          root /var/www/sites/$host;
+          try_files $uri /index.html =404;
+        }
+      }

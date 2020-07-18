@@ -1,0 +1,61 @@
+dn: o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: organization
+objectclass: top
+o: wbranch
+
+
+dn: cn=users,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: container
+objectclass: top
+cn: users
+
+dn: cn=groups,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: top
+objectclass: container
+cn: groups
+
+dn: uid=wasadmin,cn=users,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+objectclass: inetOrgPerson
+uid: wasadmin
+userpassword: wasadmin1234
+sn: wasadmin
+givenName: wasadmin
+cn: WQ Wasadmin
+
+dn: uid=wpsadmin,cn=users,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: organizationalPerson
+objectclass: person
+objectclass: top
+objectclass: inetOrgPerson
+uid: wpsadmin
+userpassword: wpsadmin
+sn: wpsadmin
+givenName: wpsadmin
+cn: WK Wpsadmin
+
+dn: uid=wpsbind,cn=users,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+uid: wpsbind
+userpassword: wpsbind1234
+sn: wpsbind
+givenName: wpsbind
+cn: 
+
+dn: cn=wpsadmins,cn=groups,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: groupOfUniqueNames
+objectclass: top
+uniquemember: uid=wpsadmin,cn=users,o=rootAdmin,dc=selfserviceAMX,dc=net
+cn: wpsadmins
+
+
+dn: cn=contentadmins,cn=groups,o=rootAdmin,dc=selfserviceAMX,dc=net
+objectclass: groupOfUniqueNames
+objectclass: top
+uniquemember: uid=dummy
+cn: contentadmins

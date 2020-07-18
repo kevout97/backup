@@ -1,0 +1,61 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-claro-all-php-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-claro-all-php
+    spec:
+      securityContext:
+        runAsUser: 1000
+      serviceAccountName: build-robot
+      containers:
+      - name: jvp-claro-all-php
+        image: docker-source-registry.amxdigital.net/jitsi-jp-jitsi
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 80
+          name: "nginx-http"
+        - containerPort: 443
+          name: "nginx-https"
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: jvp-claro-all-php-conf
+            mountPath: /etc/nginx/vhosts/claro-all-php.conf
+            subPath: claro-all-php.conf
+          - name: jvp-conf-js
+            mountPath: /var/www/sites/claro-jitsi-meet/config.js
+            subPath: config.js
+          - name: jvp-env
+            mountPath: /var/www/iam/.env
+            subPath: .env
+          - name: jvp-certificate-pem
+            mountPath: /usr/share/jitsi.claroconnect.com.pem
+            subPath: jitsi.claroconnect.com.pem
+          - name: jvp-certificate-key
+            mountPath: /usr/share/jitsi.claroconnect.com.key
+            subPath: jitsi.claroconnect.com.key
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: jvp-claro-all-php-conf
+          configMap:
+            name: jvp-claro-all-php-cm
+        - name: jvp-conf-js
+          configMap:
+            name: jvp-claro-jitsi-meet-cm
+        - name: jvp-env
+          configMap:
+            name: jvp-php-env-cm
+        - name: jvp-certificate-pem
+          configMap:
+            name: jvp-certificate-pem-cm
+        - name: jvp-certificate-key
+          configMap:
+            name: jvp-certificate-key-cm

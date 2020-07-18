@@ -1,0 +1,18 @@
+#############################################################
+#                                                           #
+#                    Runit for Microcks                     #
+#                                                           #
+#############################################################
+
+mkdir -p /var/containers/microcks/deployments/config
+
+
+docker run -d --name microcks \
+              -p 8080:8080 \
+              -v /var/containers/microcks/deployments/config:/deployments/config:z \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e SPRING_DATA_MONGODB_URI=mongodb://root:abcd1234@172.17.0.7:27017 \
+              -e SPRING_DATA_MONGODB_DATABASE=microcks \
+              -e POSTMAN_RUNNER_URL=http://172.17.0.3:3000 \
+              -e KEYCLOAK_URL=http://10.23.143.7:8085/auth \
+              mymicrocks

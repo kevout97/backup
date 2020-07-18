@@ -1,0 +1,266 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvpo1rednode03-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        redis-label: jvpo1rednode03
+    spec:
+      containers:
+      - name: redis-slave
+        image: docker-source-registry.amxdigital.net/atomic-rhel7-redis:5.0.5
+        resources:
+          limits:
+            cpu: 2
+            memory: "4G"
+        livenessProbe:
+          exec:
+            command:
+            - /sbin/docker-health-check.sh
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 6379
+          name: "redis-slave"
+        env:
+        - name: REDIS_REPLICA_ANNOUNCE_PORT
+          value: "6379"
+        - name: REDIS_REPLICA_ANNOUNCE_IP
+          value: "jvpo1rednode03-svc.jitsi-redis.svc"
+        - name: REDIS_MASTERAUTH
+          valueFrom:
+            secretKeyRef:
+              name: redis-sc
+              key: REDIS_REQUIREPASS
+        - name: REDIS_REQUIREPASS
+          valueFrom:
+            secretKeyRef:
+              name: redis-sc
+              key: REDIS_REQUIREPASS
+        - name: REDIS_REPLICA_PRIORITY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPLICA_PRIORITY
+        - name: REDIS_REPLICAOF
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPLICAOF
+        - name: REDIS_ACTIVEREHASHING
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_ACTIVEREHASHING
+        - name: REDIS_AOF_LOAD_TRUNCATED
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_AOF_LOAD_TRUNCATED
+        - name: REDIS_AOF_REWRITE_INCREMENTAL_FSYNC
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_AOF_REWRITE_INCREMENTAL_FSYNC
+        - name: REDIS_APPENDFILENAME
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_APPENDFILENAME
+        - name: REDIS_APPENDFSYNC
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_APPENDFSYNC
+        - name: REDIS_APPENDONLY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_APPENDONLY
+        - name: REDIS_AUTO_AOF_REWRITE_MIN_SIZE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_AUTO_AOF_REWRITE_MIN_SIZE
+        - name: REDIS_AUTO_AOF_REWRITE_PERCENTAGE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_AUTO_AOF_REWRITE_PERCENTAGE
+        - name: REDIS_CLIENT_OUTPUT_BUFFER_LIMIT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_CLIENT_OUTPUT_BUFFER_LIMIT
+        - name: REDIS_DATABASES
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_DATABASES
+        - name: REDIS_HASH_MAX_ZIPLIST_ENTRIES
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_HASH_MAX_ZIPLIST_ENTRIES
+        - name: REDIS_HASH_MAX_ZIPLIST_VALUE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_HASH_MAX_ZIPLIST_VALUE
+        - name: REDIS_HLL_SPARSE_MAX_BYTES
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_HLL_SPARSE_MAX_BYTES
+        - name: REDIS_HZ
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_HZ
+        - name: REDIS_LATENCY_MONITOR_THRESHOLD
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_LATENCY_MONITOR_THRESHOLD
+        - name: REDIS_LIST_COMPRESS_DEPTH
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_LIST_COMPRESS_DEPTH
+        - name: REDIS_LIST_MAX_ZIPLIST_SIZE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_LIST_MAX_ZIPLIST_SIZE
+        - name: REDIS_LOGLEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_LOGLEVEL
+        - name: REDIS_LUA_TIME_LIMIT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_LUA_TIME_LIMIT
+        - name: REDIS_MAXMEMORY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_MAXMEMORY
+        - name: REDIS_MAXMEMORY_POLICY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_MAXMEMORY_POLICY
+        - name: REDIS_NO_APPENDFSYNC_ON_REWRITE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_NO_APPENDFSYNC_ON_REWRITE
+        - name: REDIS_NOTIFY_KEYSPACE_EVENTS
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_NOTIFY_KEYSPACE_EVENTS
+        - name: REDIS_PROTECTED_MODE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_PROTECTED_MODE
+        - name: REDIS_RDBCHECKSUM
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_RDBCHECKSUM
+        - name: REDIS_RDBCOMPRESSION
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_RDBCOMPRESSION
+        - name: REDIS_REPL_DISABLE_TCP_NODELAY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPL_DISABLE_TCP_NODELAY
+        - name: REDIS_REPL_DISKLESS_SYNC
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPL_DISKLESS_SYNC
+        - name: REDIS_REPL_DISKLESS_SYNC_DELAY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPL_DISKLESS_SYNC_DELAY
+        - name: REDIS_SET_MAX_INTSET_ENTRIES
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_SET_MAX_INTSET_ENTRIES
+        - name: REDIS_SLAVE_READ_ONLY
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_SLAVE_READ_ONLY
+        - name: REDIS_REPLICA_SERVE_STALE_DATA
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_REPLICA_SERVE_STALE_DATA
+        - name: REDIS_SLOWLOG_LOG_SLOWER_THAN
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_SLOWLOG_LOG_SLOWER_THAN
+        - name: REDIS_SLOWLOG_MAX_LEN
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_SLOWLOG_MAX_LEN
+        - name: REDIS_STOP_WRITES_ON_BGSAVE_ERROR
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_STOP_WRITES_ON_BGSAVE_ERROR
+        - name: REDIS_SUPERVISED
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_SUPERVISED
+        - name: REDIS_TCP_BACKLOG
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_TCP_BACKLOG
+        - name: REDIS_TCP_KEEPALIVE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_TCP_KEEPALIVE
+        - name: REDIS_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_TIMEOUT
+        - name: REDIS_ZSET_MAX_ZIPLIST_ENTRIES
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_ZSET_MAX_ZIPLIST_ENTRIES
+        - name: REDIS_ZSET_MAX_ZIPLIST_VALUE
+          valueFrom:
+            configMapKeyRef:
+              name: redis-cm
+              key: REDIS_ZSET_MAX_ZIPLIST_VALUE
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City

@@ -1,0 +1,32 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-claro-iam-front-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-claro-iam-front
+    spec:
+      containers:
+      - name: jvp-claro-iam-front
+        image: docker-source-registry.amxdigital.net/jitsi-jp-iam-front
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 80
+          name: "nginx-http"
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: jvp-claro-iam-front-conf
+            mountPath: /etc/nginx/vhosts/claro-iam-front.conf
+            subPath: claro-iam-front.conf
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: jvp-claro-iam-front-conf
+          configMap:
+            name: jvp-claro-connect-iam-front-cm

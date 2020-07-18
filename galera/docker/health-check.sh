@@ -1,0 +1,9 @@
+
+
+
+SHOW GLOBAL VARIABLES LIKE ‘max_connections’;
+SHOW GLOBAL STATUS LIKE ‘max_used_connections’;
+SHOW SLAVE STATUS;
+SHOW ENGINE INNODB STATUS;
+SHOW GLOBAL STATUS LIKE ‘aborted_connects’;
+

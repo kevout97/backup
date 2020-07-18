@@ -1,0 +1,94 @@
+# Playbook para restaurar el quorum
+- hosts: etcd
+  become: yes
+  become_user: root
+  tasks:
+  - name: "Directorio para backup"
+    file:
+      path: /opt/restoring-quorum
+      state: directory
+      mode: '0755'
+
+  - name: "Backup yaml del Pod de Etcd."
+    copy:
+      remote_src: yes
+      src: /etc/origin/node/pods/etcd.yaml
+      dest: /opt/restoring-quorum/etcd.yaml
+      owner: root
+      group: root
+      mode: '0600'
+  
+  - name: "Eliminamos el Pod actual de Etcd"
+    file:
+      path: /etc/origin/node/pods/etcd.yaml
+      state: absent
+
+  - name: "Backup del archivo de configuración de Etcd."
+    copy:
+      remote_src: yes
+      src: /etc/etcd/etcd.conf
+      dest: /opt/restoring-quorum/etcd.conf.bak
+      owner: root
+      group: root
+      mode: '0640'
+  
+  - name: "Configuracion para crear un nuevo cluster"
+    lineinfile:
+      path: /etc/etcd/etcd.conf
+      line: ETCD_FORCE_NEW_CLUSTER=true
+      insertafter: EOF
+  
+  - name: "Reinicio del Pod de Etcd"
+    copy:
+      remote_src: yes
+      src: /opt/restoring-quorum/etcd.yaml
+      dest: /etc/origin/node/pods/etcd.yaml
+      owner: root
+      group: root
+      mode: '0600'
+
+# Esperamos a que el Pod inicie  
+  - pause:
+      minutes: 1
+  
+  - name: "Eliminamos el backup para crear un nuevo cluster"
+    file:
+      path: /opt/restoring-quorum/etcd.yaml
+      state: absent
+  
+  - name: "Backup de la nueva configuracion con el quorum restaurado."
+    copy:
+      remote_src: yes
+      src: /etc/origin/node/pods/etcd.yaml
+      dest: /opt/restoring-quorum/etcd.yaml
+      owner: root
+      group: root
+      mode: '0600'
+  
+  - name: "Eliminamos la configuración actual de Etcd"
+    file:
+      path: /etc/etcd/etcd.conf
+      state: absent
+  
+  - name: "Restauracion de la configuración del Etcd"
+    copy:
+      remote_src: yes
+      src: /opt/restoring-quorum/etcd.conf.bak
+      dest: /etc/etcd/etcd.conf
+      owner: root
+      group: root
+      mode: '0600'
+
+  - name: "Reinicio del Pod de Etcd"
+    copy:
+      remote_src: yes
+      src: /opt/restoring-quorum/etcd.yaml
+      dest: /etc/origin/node/pods/etcd.yaml
+      owner: root
+      group: root
+      mode: '0600'
+
+  - name: "Eliminamos el directorio backup"
+    file:
+      path: /opt/restoring-quorum/
+      state: absent

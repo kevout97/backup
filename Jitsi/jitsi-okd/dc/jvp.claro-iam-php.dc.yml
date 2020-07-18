@@ -1,0 +1,32 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-claro-iam-php-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-claro-iam-php
+    spec:
+      containers:
+      - name: jvp-claro-iam
+        image: docker-source-registry.amxdigital.net/jitsi-php-iam
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 80
+          name: "nginx-http"
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: jvp-env
+            mountPath: /var/www/iam/.env
+            subPath: .env
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: jvp-env
+          configMap:
+            name: jvp-php-env-cm

@@ -1,0 +1,48 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvpo1redsenti-dc
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        redis-label: jvpo1redsenti
+    spec:
+      containers:
+      - name: redis-sentinel
+        image: docker-source-registry.amxdigital.net/atomic-rhel7-redis:5.0.5
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 26379
+          name: "redis-sentinel"
+        env:
+        - name: REDIS_SENTINEL_ANNOUNCE_PORT
+          value: "26379"
+        # - name: REDIS_SENTINEL_ANNOUNCE_IP
+        #   value: "REDIS_SENTINEL_SVC"
+        - name: REDIS_PORT
+          value: "26379"
+        - name: REDIS_SENTINEL_MONITOR
+          valueFrom:
+            configMapKeyRef:
+              name: redis-sentinel-cm
+              key: REDIS_SENTINEL_MONITOR
+        - name: REDIS_SENTINEL_FAILOVER_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-sentinel-cm
+              key: REDIS_SENTINEL_FAILOVER_TIMEOUT
+        - name: REDIS_SENTINEL_AUTH_PASS
+          valueFrom:
+            secretKeyRef:
+              name: redis-sentinel-sc
+              key: REDIS_SENTINEL_AUTH_PASS
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City

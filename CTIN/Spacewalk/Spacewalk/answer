@@ -1,0 +1,17 @@
+admin-email = root@localhost
+ssl-set-cnames = spacewalk2
+ssl-set-org = Spacewalk Org
+ssl-set-org-unit = spacewalk
+ssl-set-city = Mexico
+ssl-set-state = Mexico
+ssl-set-country = MX
+ssl-password = spacewalk
+ssl-set-email = root@localhost
+ssl-config-sslvhost = N
+db-backend=postgresql
+db-name=spaceschema
+db-user=spaceuser
+db-password=spacepw
+db-host=172.17.0.7
+db-port=5432
+enable-tftp=N

@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="772" leftMargin="35" rightMargin="35" topMargin="20" bottomMargin="20" uuid="9bfd9aed-679c-43ef-ae95-e794ec53ef17">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="261"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/KevOut/GitLab/OTRS/Jasper/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dia_corte" class="java.lang.String"/>
+	<parameter name="anio_corte" class="java.lang.String"/>
+	<parameter name="tendencia" class="java.lang.String"/>
+	<parameter name="tendencia_porcentaje" class="java.lang.String"/>
+	<parameter name="total_cerrados" class="java.lang.String"/>
+	<parameter name="total_abiertos" class="java.lang.String"/>
+	<parameter name="dia_informe_anterior" class="java.lang.String"/>
+	<parameter name="mes_informe_anterior" class="java.lang.String"/>
+	<parameter name="porcentaje_semana_anterior" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes_claro_pagos" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes_claro_shop" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes_tramites" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes_subdireccion" class="java.lang.String"/>
+	<parameter name="porcentaje_solicitudes_pendientes_triara" class="java.lang.String"/>
+	<parameter name="mes_corte" class="java.lang.String"/>
+	<pageHeader>
+		<band height="114">
+			<staticText>
+				<reportElement x="9" y="0" width="260" height="100" uuid="fa6c5e63-01e9-4911-ac16-365f71a44b71"/>
+				<box>
+					<pen lineWidth="2.0"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="0" width="500" height="100" uuid="a6549941-d9f3-45a5-9ae6-2a7c49563c83"/>
+				<box topPadding="5">
+					<pen lineWidth="2.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[SUBDIRECCIÓN CORPORATIVA DE INICIATIVAS
+DIGITALES
+GERENCIA DE INFRAESTRUCTURA
+Indicadores de Resultados
+Proceso Resolución]]></text>
+			</staticText>
+			<image scaleImage="RealSize" hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="ContainerHeight" x="20" y="3" width="240" height="80" uuid="1cd885a1-d8af-48e8-9756-e7fc29aa80e5"/>
+				<imageExpression><![CDATA["/Reports/OTRS/Imagenes/America_Movil.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="390">
+			<staticText>
+				<reportElement x="127" y="8" width="519" height="39" uuid="20feb2f9-9b08-4114-8819-62f3880ac093"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lucida Sans" size="28"/>
+				</textElement>
+				<text><![CDATA[Indicadores Mesa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="54" width="466" height="20" uuid="1a0b97c3-5cdf-4632-ba6c-f2e00f868b79"/>
+				<textElement>
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerentes de la Subdirección Corporativa de Iniciativas Digitales (SCID)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="89" width="770" height="111" uuid="edfe4677-0c66-43f0-a678-035657ce7efe"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["En cumplimiento a nuestros procedimientos de administración de incidencias y petición de servicios, bajo el proceso de Resolución requisito “8” de la norma internacional ISO 20000-1:2011 “Sistema de Gestión de Servicios de TI” de la Gerencia de infraestructura. Hacemos de su conocimiento los siguientes resultados con el fin de solicitar atentamente su apoyo en la gestión oportuna de las solicitudes que se encuentran pendientes de validar o en proceso de información necesaria por las áreas para el cierre o atención de las mismas, de fecha corte "+$P{dia_corte}+" de "+$P{mes_corte}+" del "+$P{anio_corte}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="1" y="208" width="769" height="42" uuid="58a0af20-b4e0-4294-8c71-b71e9cc2bf22"/>
+				<textElement>
+					<font size="14" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[NOTA: En caso de no poder visualizar las gráficas, favor de habilitar que el remitente es de confianza o si lo prefiere adjunto encontrará un archivo en PDF para su consulta.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="1" y="265" width="769" height="65" forecolor="#FFFFFF" backcolor="#3C78D8" uuid="0dddc833-ff13-4a99-9f45-aa5a99064c9c"/>
+				<box topPadding="0" leftPadding="7" bottomPadding="0" rightPadding="7">
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["La tendencia fué "+$P{tendencia}+" ("+$P{tendencia_porcentaje}+"%) en la atención de solicitudes pendientes por validación o en espera de información complementaria por las áreas requirentes."]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="384" width="770" height="1" uuid="9592c558-c67c-4944-a951-ef362aeb9713"/>
+			</break>
+		</band>
+		<band height="391">
+			<break>
+				<reportElement x="0" y="384" width="769" height="1" uuid="ad746a8d-1ddd-4d53-bb41-fa7bf9767894"/>
+			</break>
+			<textField>
+				<reportElement x="0" y="0" width="768" height="30" forecolor="#B8B8B8" uuid="4a105372-0580-4c66-989d-c7a660f3b18f"/>
+				<textElement>
+					<font fontName="FreeSans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["% de solicitudes pendientes por validar o en proceso de información necesaria por las areas 2018-11-12"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="7" y="40" width="760" height="230" uuid="af2396dd-3d45-46d0-802d-76b74f279238">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaPorcentaje.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="0" y="276" width="769" height="20" forecolor="#FFFFFF" backcolor="#3C78D8" uuid="5f22134a-3523-46dc-be93-79943d5393fe"/>
+				<box topPadding="0" leftPadding="7" bottomPadding="0" rightPadding="7">
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Los mejores resultados se logran en la primera semana de cada mes."]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="351" width="100" height="1" uuid="6da02092-72e8-4e4e-ac78-997947fce3a7"/>
+			</break>
+			<subreport>
+				<reportElement x="4" y="16" width="760" height="230" uuid="7906d39d-4932-4b6d-b886-42f01c1d90b0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaPorcentaje2.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<textField>
+				<reportElement x="0" y="4" width="768" height="30" forecolor="#B8B8B8" uuid="4e797da4-b909-408b-86a7-3f0cb486e156"/>
+				<textElement>
+					<font fontName="FreeSans" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total de solicitudes cerradas ("+$P{total_cerrados}+") VS Total de solicitudes abiertas ("+$P{total_abiertos}+")"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="385" width="100" height="1" uuid="9c019e1a-c5f8-4982-b95a-0931a92a1326"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="38" width="760" height="230" uuid="16a5798f-cfed-4cfc-96d4-bab176f7cec0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaAbiertosCerrados.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<break>
+				<reportElement x="0" y="380" width="99" height="1" uuid="0ce3eb3f-7075-477f-bd95-5b1c21e9b2aa"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="38" width="760" height="230" uuid="f6d165d6-2de7-418e-86a3-712aa5e1bce0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaAbiertosCerrados2.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<break>
+				<reportElement x="0" y="384" width="100" height="1" uuid="4033c5c0-1561-4149-8e8b-6773b4f19460"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="11" width="760" height="230" uuid="37e35276-d7ed-43ce-9aa1-41fc9a99b5d5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaAbiertosCerrados3.jrxml"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="1" y="266" width="770" height="40" uuid="56a2e5d5-f491-45a2-8569-077ce583b6db"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación: La atención de solicitudes recibidas y atendidas hasta su cierre  fué de "+$P{total_cerrados}+" tickets por la Gerencia de Infraestructura."]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="391">
+			<staticText>
+				<reportElement x="0" y="4" width="770" height="30" forecolor="#B8B8B8" uuid="9d84af63-0036-49aa-8d04-8f75f58a6355"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Solicitudes VS Estatus]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="288" width="770" height="95" uuid="f85cdc4a-7a56-4738-aa6c-25d9a4a925e7"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por las áreas requirentes.\nEl desempeño de la atención de solicitudes por los usuarios fue de un "+$P{tendencia_porcentaje}+"% favorable, comparado con los resultados de semana del "+$P{dia_informe_anterior}+" de "+$P{mes_informe_anterior}+" ("+$P{porcentaje_semana_anterior}+"%)."]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="386" width="100" height="1" uuid="a0f2374b-85ff-409b-9811-50d6a88c855a"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="39" width="769" height="230" uuid="121b4ae0-3660-4b59-944f-6afac8ae5635">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaSolicitudesEstatus.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="0" y="6" width="770" height="30" forecolor="#B8B8B8" uuid="94f0d376-3beb-44f6-9b1e-f32eade1c0b8"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerencia de Desarrollo de Claro Pagos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="326" width="770" height="50" uuid="d40fbcb8-d192-4238-93b7-2d7ac63e28f5"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes_claro_pagos}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por la Gerencia de Desarrollo de Claro Pagos"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="383" width="100" height="1" uuid="010f8234-000d-49ab-b55d-635df9b6d7ea"/>
+			</break>
+			<subreport>
+				<reportElement x="1" y="40" width="760" height="280" uuid="75f871e7-1e16-4827-bb8d-61df5f98051c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaClaroPagos.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="1" y="10" width="770" height="30" forecolor="#B8B8B8" uuid="4ab6c659-f752-4525-9efc-47a9b3c1c011"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerencia de Desarrollo de Claro Shop]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="325" width="770" height="45" uuid="4516249c-27d8-421a-b5a6-d238c21b9cfb"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes_claro_shop}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por la Gerencia de Desarrollo de Claro Shop"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="379" width="100" height="1" uuid="977bbd3a-bb32-4f2e-979d-7eab2092dee3"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="42" width="760" height="280" uuid="52930126-3163-4caa-a78f-c7e8af840959">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaClaroShop.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="0" y="4" width="768" height="30" forecolor="#B8B8B8" uuid="da4d6df3-c242-438b-86a6-dc3bf0009888"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gerencia de Plataforma y Tramites Administrativos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-1" y="330" width="770" height="50" uuid="7b1b09b5-4894-4d00-bd40-42e4856e3006"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes_tramites}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por la Gerencia de Desarrollo de Plataforma y Tramites Administrativos"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="383" width="100" height="1" uuid="e709979a-beaa-49e4-94ca-0ef50936c42c"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="34" width="760" height="280" uuid="11481aa8-9e32-4f82-b39f-a8ff211e8e44">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaPlataformaTramitesAdm.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="0" y="4" width="770" height="30" forecolor="#B8B8B8" uuid="9fdae3a6-7c44-4e4d-8947-77d43f9dd676"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subdirección Corporativa de Iniciativas Digitales]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="-1" y="326" width="767" height="51" uuid="3a2abfee-8451-4eee-82ef-e059d2be30f8"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes_subdireccion}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por la Subdirección corporativa de Iniciativas Digitales"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="380" width="99" height="1" uuid="3d07ec9c-8b16-47ba-93a2-cbb3ed547754"/>
+			</break>
+			<subreport>
+				<reportElement x="2" y="37" width="760" height="280" uuid="887f29ce-0e43-48de-a8c2-d98f73a8418f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaIniciativasDigitales.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="-1" y="4" width="770" height="30" forecolor="#B8B8B8" uuid="a5c9217d-948c-4235-8180-d9d864502833"/>
+				<textElement>
+					<font fontName="FreeSans" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Triara]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="325" width="768" height="53" uuid="e743713a-0fb1-4bbf-a5c8-57b710d6c180"/>
+				<box leftPadding="7" rightPadding="7">
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Observación:\nEl "+$P{porcentaje_solicitudes_pendientes_triara}+"% de las solicitudes se encuentran pendientes por validar o en espera de información complementaria por Triara"]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="381" width="100" height="1" uuid="290103aa-84c9-41a5-8688-814eaab70a97"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="35" width="760" height="280" uuid="8ceeb02e-ee02-4639-9789-c8d4b1a4d1d5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["/Reports/OTRS/GraficasIndicadoresresultados/GraficaTriara.jrxml"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="390">
+			<staticText>
+				<reportElement x="-1" y="12" width="770" height="30" uuid="5ab3b103-d3b2-4c5c-99af-93970f7388c8"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Quedamos a sus órdenes por cualquier instrucción al respecto.
+Saludos cordiales.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="48" width="770" height="94" uuid="d6b97a15-7c9b-4cee-b9dd-25490f61b898"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elena Gil
+Master ISO 9001 | ISO 27001 | ISO 20000-1
+Subgerente de Procesos y Proyectos | Gerencia de Infraestructura
+Subdirección Corporativa de Iniciativas Digitales
+América Móvil, S.A.B. de C.V.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="20" width="770" height="30" uuid="9127bbed-a0b3-40b7-bb4b-05b79a3f210d"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AMX-IR-SCID-GI-01 V 1.0\nPágina "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="770" height="20" uuid="74ab5df6-6e6e-439f-b157-01d37388c002"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO CONFIDENCIAL]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,32 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-claro-web-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-claro-web
+    spec:
+      containers:
+      - name: claro-web
+        image: docker-source-registry.amxdigital.net/jitsi-jp-web
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 80
+          name: "nginx-http"
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: jvp-claro-web-conf
+            mountPath: /etc/nginx/vhosts/claro-web.conf
+            subPath: claro-web.conf
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: jvp-claro-web-conf
+          configMap:
+            name: jvp-claro-web-conf-cm

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jvp-jp-pass-sc
+data:
+  JICOFO_FOCUS_PASSWORD: ZmE4RG1HUWs=
+  JICOFO_JVB_PASSWORD: SldsYzZDRGc=
+  JICOFO_SECRET: eFA2ZmdVI2w=
+  JICOFO_AUTH_PASSWORD: ZmE4RG1HUWs=

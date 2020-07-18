@@ -1,0 +1,63 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/colorNavigationBar</item>
+    </style>
+
+    <style name="CCAButtonBlue">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CCAButtonBlueDark" parent="CCAButtonBlue">
+        <item name="android:background">@drawable/bg_button_blue_dark</item>
+    </style>
+
+    <style name="CCAButtonBlueLight" parent="CCAButtonBlue">
+        <item name="android:background">@drawable/bg_button_blue_light</item>
+    </style>
+
+    <style name="CCATitle">
+        <item name="android:textSize">23sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTitleBlack</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+
+    <style name="CCAHeaderTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorTitleBlack</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+    </style>
+
+    <style name="CCASubtitle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorSubtitleBlack</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="CCAFootLabel">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorFootLabelBlack</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
+    <style name="CCAFootLabelWhite" parent="CCAFootLabel">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CCABody">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorBodyBlack</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+</resources>

@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#Dont forget: sysctl -w net.core.somaxconn=65535
+
+name=redis-service
+puerto=6379
+redisp="lApQeO8357MvImoX"
+memory=10240m
+redis_memory=4096m
+
+docker rm -f $name
+
+mkdir -p /var/containers/$name/{var/log/redis/,var/lib/redis/,usr/local/etc/redis/} /var/containers/$name/var/lib/redis/data
+chown 52872:root -R /var/containers/$name/{var/log/redis/,var/lib/redis/,usr/local/etc/redis/}
+
+docker run -td --privileged --name  $name  -p 6379:6379 \
+        --cap-add sys_resource \
+        -v /etc/localtime:/etc/localtime:ro \
+        --health-cmd='/sbin/docker-health-check.sh' \
+        --sysctl=net.core.somaxconn="65535" \
+        --volume=/usr/share/zoneinfo:/usr/share/zoneinfo:ro \
+        --ulimit nproc=1048576:1048576 \
+        --memory-swappiness=0 \
+        --restart unless-stopped \
+        --memory=${memory} \
+        --health-interval=10s \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /var/containers/$name/var/lib/redis/:/var/lib/redis/:z \
+        -e REDIS_REQUIREPASS=$redisp \
+        -e TZ=America/Mexico_City \
+        -e REDIS_SAVE="60 100;300 1;60 10000" \
+        -e REDIS_ACTIVEREHASHING="yes" \
+        -e REDIS_AOF_LOAD_TRUNCATED="yes" \
+        -e REDIS_AOF_REWRITE_INCREMENTAL_FSYNC="yes" \
+        -e REDIS_APPENDFILENAME="appendonly.aof" \
+        -e REDIS_APPENDFSYNC="everysec" \
+        -e REDIS_APPENDONLY="no" \
+        -e REDIS_AUTO_AOF_REWRITE_MIN_SIZE="64mb" \
+        -e REDIS_AUTO_AOF_REWRITE_PERCENTAGE="100" \
+        -e REDIS_CLIENT_OUTPUT_BUFFER_LIMIT="normal 0 0 0;pubsub 32mb 8mb 60;replica 256mb 64mb 60" \
+        -e REDIS_DATABASES="16" \
+        -e REDIS_HASH_MAX_ZIPLIST_ENTRIES="512" \
+        -e REDIS_HASH_MAX_ZIPLIST_VALUE="64" \
+        -e REDIS_HLL_SPARSE_MAX_BYTES="3000" \
+        -e REDIS_HZ="10" \
+        -e REDIS_LATENCY_MONITOR_THRESHOLD="0" \
+        -e REDIS_LIST_COMPRESS_DEPTH="0" \
+        -e REDIS_LIST_MAX_ZIPLIST_SIZE="-2" \
+        -e REDIS_LOGLEVEL="notice" \
+        -e REDIS_LUA_TIME_LIMIT="5000" \
+        -e REDIS_MAXMEMORY="512m" \
+        -e REDIS_MAXMEMORY_POLICY="allkeys-lru" \
+        -e REDIS_NO_APPENDFSYNC_ON_REWRITE="no" \
+        -e REDIS_NOTIFY_KEYSPACE_EVENTS='""' \
+        -e REDIS_PROTECTED_MODE="yes" \
+        -e REDIS_RDBCHECKSUM="yes" \
+        -e REDIS_RDBCOMPRESSION="yes" \
+        -e REDIS_REPL_DISABLE_TCP_NODELAY="no" \
+        -e REDIS_REPL_DISKLESS_SYNC="no" \
+        -e REDIS_REPL_DISKLESS_SYNC_DELAY="5" \
+        -e REDIS_SET_MAX_INTSET_ENTRIES="512" \
+        -e REDIS_SLAVE_READ_ONLY="yes" \
+        -e REDIS_REPLICA_SERVE_STALE_DATA="yes" \
+        -e REDIS_SLOWLOG_LOG_SLOWER_THAN="1000" \
+        -e REDIS_SLOWLOG_MAX_LEN="128" \
+        -e REDIS_STOP_WRITES_ON_BGSAVE_ERROR="yes" \
+        -e REDIS_SUPERVISED="no" \
+        -e REDIS_TCP_BACKLOG="511" \
+        -e REDIS_TCP_KEEPALIVE="300" \
+        -e REDIS_TIMEOUT="0" \
+        -e REDIS_ZSET_MAX_ZIPLIST_ENTRIES="128" \
+        -e REDIS_ZSET_MAX_ZIPLIST_VALUE="64" \
+    dockeregistry.amovildigitalops.com/atomic-rhel7-redis:5.0.5

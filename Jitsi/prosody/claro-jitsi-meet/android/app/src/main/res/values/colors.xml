@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_splash_background">@android:color/white</color>
+
+    <color name="colorNavigationBar">@android:color/black</color>
+
+    <color name="colorMainConferenceBackground">#f2f2f2</color>
+
+    <color name="colorTitleBlack">#323232</color>
+    <color name="colorSubtitleBlack">#323232</color>
+    <color name="colorFootLabelBlack">#323232</color>
+    <color name="colorBodyBlack">#323232</color>
+
+    <color name="colorButtonBlueLight">#95bdef</color>
+    <color name="colorButtonBlueDark">#446998</color>
+    <color name="colorButtonWhiteText">#5886c0</color>
+
+    <color name="colorButtonOptionEnabled">#5886c0</color>
+    <color name="colorButtonOptionDisabled">#D2D2D2</color>
+
+    <color name="colorControlEnabled">#5886c0</color>
+    <color name="colorControlDisabled">#9d9d9d</color>
+</resources>

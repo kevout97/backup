@@ -1,0 +1,34 @@
+#!/bin/bash
+
+CONTAINER_NAME=cassandra
+
+rm -rf /var/containers/${CONTAINER_NAME}/var/lib/cassandra 
+mkdir -p /var/containers/${CONTAINER_NAME}/var/lib/cassandra 
+chown -R 999:998 /var/containers/${CONTAINER_NAME}/var/lib/cassandra
+
+docker rm -f ${CONTAINER_NAME}
+
+sysctl -w vm.max_map_count=1048575
+
+docker run -itd --name ${CONTAINER_NAME} \
+    --hostname=$CONTAINER_NAME.service \
+    -p 9042:9042 \
+    -p 7000:7000 \
+    -p 9160:9160 \
+    --health-cmd='/sbin/docker-health-check.sh' \
+    --health-interval=10s \
+    --restart unless-stopped \
+    --ulimit memlock=-1:-1 \
+    -v /usr/share/zoneinfo:/usr/share/zoneinfo:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /var/containers/${CONTAINER_NAME}/var/lib/cassandra:/var/lib/cassandra:z \
+    -e "TZ=America/Mexico_City" \
+    -e "CASSANDRA_START_RPC=true" \
+    -e "CASSANDRA_RPC_ADDRESS=0.0.0.0" \
+    -e "CASSANDRA_BROADCAST_RPC_ADDRESS=10.23.143.8" \
+    -e "CASSANDRA_BROADCAST_ADDRESS=10.23.143.8" \
+    -e "CASSANDRA_SEEDS=10.23.143.8" \
+    -e "CASSANDRA_ADMIN_PASSWORD=abcd1234" \
+    -e "CASSANDRA_MEMTABLE_ALLOCATION_TYPE=offheap_objects" \
+    -e "LOCAL_JMX=no" \
+    dockeregistry.amovildigitalops.com/atomic-rhel7-cassandra:3.11.5

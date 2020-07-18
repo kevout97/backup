@@ -1,0 +1,122 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-jp-iam-cc-cfg-lua-cm
+data: 
+  claroconnect.com.cfg.lua: |
+    plugin_paths = {"/usr/share/claro-jitsi-meet/resources/prosody-plugins"}
+
+    bosh_max_inactivity = 15;
+    cross_domain_bosh = true;
+    cross_domain_websocket = true;
+    consider_websocket_secure = true;
+    consider_bosh_secure = true;
+    --################ En caso de ser necesario ajustar el dominio ###############
+    http_default_host = "claroconnect.com"
+
+    -- | MAIN VIRTUAL HOST
+    -------------------------------------------------
+    --################ En caso de ser necesario ajustar el dominio ###############
+    VirtualHost "claroconnect.com"
+            -- Auth type
+            authentication = "anonymous"
+            -- Auth data
+            app_id=""
+            app_secret=""
+      -- Sync events data
+    --################ En caso de ser necesario ajustar el dominio ###############
+      iam_url="https://local.claroconnect.com/iam/"
+      iam_secret="Xsecret01X"
+      -- Linked components
+    --################ En caso de ser necesario ajustar el dominio ###############
+      muc_component="conference.claroconnect.com"
+            --################ En caso de ser necesario ajustar el dominio ###############
+            waiting_muc_component = "waiting.claroconnect.com"
+    --################ En caso de ser necesario ajustar el dominio ###############
+      speakerstats_component = "speakerstats.claroconnect.com"
+            --################ En caso de ser necesario ajustar el dominio ###############
+            conference_duration_component = "conferenceduration.claroconnect.com"
+            -- SSL data
+            ssl = {
+              --################ En caso de ser necesario ajustar el Path de los certificados ###############
+              key = "/etc/prosody/certs/jitsi.claroconnect.com.key";
+              certificate = "/etc/prosody/certs/jitsi.claroconnect.com.pem";
+            }
+            -- Enabled modules
+            modules_enabled = {
+                "bosh";
+                "pubsub";
+                "ping"; -- Enable mod_ping
+            "muc_size";
+            "muc_sync_event";
+                --"speakerstats";
+                --"turncredentials";
+                --"conference_duration";
+            }
+
+            c2s_require_encryption = false
+
+    -- | JICOFO VIRTUAL HOST
+    -------------------------------------------------
+    --################ En caso de ser necesario ajustar el dominio ###############
+    VirtualHost "auth.claroconnect.com"
+        ssl = {
+          --################ En caso de ser necesario ajustar el Path de los certificados ###############
+          key = "/etc/prosody/certs/jitsi.claroconnect.com.key";
+          certificate = "/etc/prosody/certs/jitsi.claroconnect.com.pem";
+        }
+        authentication = "internal_plain"
+
+    -- | COMPONENT LINKING
+    -------------------------------------------------
+
+    -- CONFERENCE MUC 
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "conference.claroconnect.com" "muc"
+      --################ En caso de ser necesario ajustar el dominio ###############
+      admins = { "focus@auth.claroconnect.com" }
+      modules_enabled = {
+        "muc_meeting_id";
+        "muc_domain_mapper";
+        -- "token_verification";
+      }
+      muc_room_locking = false
+      muc_room_default_public_jids = true
+
+
+    -- WAITING ROOM MUC 
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "waiting.claroconnect.com" "muc"
+        --################ En caso de ser necesario ajustar el dominio ###############
+        admins = { "focus@auth.claroconnect.com" }
+        authentication = "anonymous"
+        restrict_room_creation = false
+        muc_room_locking = false
+        muc_room_default_public_jids = true
+
+    -- FOCUS
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "focus.claroconnect.com"
+        component_secret = "xP6fgU#l"
+
+    -- INTERNAL (LOAD BALANCING) MUC
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "internal.auth.claroconnect.com" "muc"
+      --################ En caso de ser necesario ajustar el dominio ###############
+    admins = { "focus@auth.claroconnect.com", "jvb@auth.claroconnect.com" }
+        storage = "memory"
+        modules_enabled = {
+          "ping";
+        }
+        muc_room_locking = false
+        muc_room_default_public_jids = true
+
+    -- EXTRA COMPONENTS
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "speakerstats.claroconnect.com" "speakerstats_component"
+        --################ En caso de ser necesario ajustar el dominio ###############
+        muc_component = "conference.claroconnect.com"
+    --################ En caso de ser necesario ajustar el dominio ###############
+    Component "conferenceduration.claroconenct.com" "conference_duration_component"
+        --################ En caso de ser necesario ajustar el dominio ###############
+        muc_component = "conference.claroconnect.com"

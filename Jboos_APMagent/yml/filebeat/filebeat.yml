@@ -1,0 +1,15 @@
+# =================== Filebeat: filebeat.yml ====================== #
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+  
+processors:
+- add_cloud_metadata:
+
+setup.kibana:
+  host: "kibana:5601"
+
+output.logstash:  
+  hosts: ['logstash:5044']

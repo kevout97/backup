@@ -1,0 +1,33 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: jvp-certificate-key-cm
+data: 
+  jitsi.claroconnect.com.key: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEAtCridHTEp5tegJtzMc9w7eOj5zSSYFQpbsmPXxmjWK6DpvZn
+    I4zhf8Kq/qGNLqyOnED8sM+8J35OvwAT00kIewSw+kg1iDWqinyTHWNe6bkT8Zfl
+    ykAIXft5t4cQFEzvxJYEJTXtK6XE5K6Eu0QgHSmisz6GhrTzqW2rU1NeNVl55anK
+    054J6pFfkgFHOUIeoI8dNsNuTtvmATqLg2ZRDPHBagTvtyO2WamWkWF290r+mLbN
+    kgyGun+sGanS+1GHOS7rcRe3ylC/pAB3YfahFYuvpoQ/CJ6hf5y9yV+Hl+hAX35w
+    LhoQ6xwyQB47fZ3Gdi2XM2PUfL2T6ZlwDRyfvwIDAQABAoIBAQCy4jmCA0YWXC9S
+    ZgXUGPE5YWIld482UZnpw/q0I9KJhIx2xAPXylNC9NeuhlyVUQMvpV6/dyKL2973
+    yW3lxIfFDP1jIzrziMVRRysSbM2aJgblQzoGu9kS51MMo++VGGafu4tWHtrjEW4S
+    2Cw1ewifq+09JwGO0i9zs839p7LMJ+UeEu/Yvt6eTJMRNuYOLq/B8zGpLtiJdsTF
+    W8kHQqGKRJAVzC6ET0L8PTSlasNgAZLbkYJ2Y2m+Jp1/0OoqAiZcS+sNJH3/tgZl
+    NrSyh9SJ3D5kLMPaKHbg6FgireyPzw3MneXnxdm5Ma7khF1EPWWXpOX3XozKxqf7
+    EsT78GVBAoGBAOgMj4nBLH4AGCLEcOo0al5r9/ouv5fpzeMwmY/Q30l5s6aQDb2z
+    g0C7H5KnYnvwEJgIVwrJhWt2G39ok2hRLOFbsEYX34V+QF0YpiUQSbefh4Fgw71R
+    IJfIpA3f6V5Woi+0Xsm59jtk8IeV8QHniLf2KqeaYEj+n0TSVtQ4v9IPAoGBAMbD
+    dMv3l/R3nvoiatt59DAHgh8qmkqMLeysMht7VukvBZGVvLtG/1D+XkNi6a11Qb0O
+    rU3n4Et8miNFgizWrWZtkqJixAeyUH0ggLhOFdlpG+cz9vjVZik28GfLKPFz9rih
+    MeEdP+ki02vxzlscgRVPXeWQe3+vTGI0UsMtR0dRAoGAb9Zt77ScnvWorEkFKrus
+    cGmVEI0rZioXQuIPgNLoat8vCJ3xIXa9UZteMi5eNuGS/dM3MEnD9fDse9GJCgPl
+    n4+zO3USE6Kvnq7clIxvGwLWKjLa5AmPrdfTyaQbM46JiHhkHtFzrViO3KoViBdx
+    O0h3cmPi+AtP87l0g7/+I10CgYBK90FABLxNOii90ulWqiKNUuei9aCH6WMQ1sl3
+    UAexn0iMZltujxKQ67+FzvKvt3/53GVE8uXH0tEX6Il2e+merkkV8gZZmMl+yBmE
+    af8XpusdQp4tr97+QHhfzWI93yz46eM0MqH+PmJbXjIkbxXIgcy6XsoVmHpIt89X
+    SeaOYQKBgDvpoRXFcGKMdHDRrRJ01GjRLzxNIYCOXQlocvpiH+jPpLH3NlIjdz2n
+    T5kL956pMluT9mGs5bvxwfYDHKQ+Rl+JV8RMt0y/w/pFY2PToiXXBVZ4lIjRuGV4
+    QVx+BVYNHy5EssYFGvjK7+rMGfQ9J6K/i1zxrrzMWldJxlIRuKeL
+    -----END RSA PRIVATE KEY-----

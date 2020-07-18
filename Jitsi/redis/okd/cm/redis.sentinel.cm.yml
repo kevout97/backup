@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-sentinel-cm
+data:
+  REDIS_SENTINEL_MONITOR: "redis-master jvpo1redmast01-svc.jitsi-redis.svc 6379 2"
+  REDIS_SENTINEL_FAILOVER_TIMEOUT: "redis-master 60000"

@@ -1,0 +1,38 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: jvp-claro-jitsi-meet-dc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        jvp-label: jvp-claro-jitsi-meet
+    spec:
+      containers:
+      - name: jvp-claro-jitsi-meet
+        image: docker-source-registry.amxdigital.net/jitsi-jp-jitsi
+        imagePullPolicy: IfNotPresent
+        restartPolicy: OnFailure
+        ports:
+        - containerPort: 80
+          name: "nginx-http"
+        volumeMounts:
+          - name: tz-mexico
+            mountPath: /etc/localtime
+          - name: jvp-claro-jitsi-meet-conf
+            mountPath: /etc/nginx/vhosts/claro-jitsi-meet.conf
+            subPath: claro-jitsi-meet.conf
+          - name: jvp-conf-js
+            mountPath: /var/www/sites/claro-jitsi-meet/config.js
+            subPath: config.js
+      volumes:
+        - name: tz-mexico
+          hostPath:
+            path: /usr/share/zoneinfo/America/Mexico_City
+        - name: jvp-claro-jitsi-meet-conf
+          configMap:
+            name: jvp-claro-jitsi-meet-cm
+        - name: jvp-conf-js
+          configMap:
+            name: jvp-php-conf-js-cm

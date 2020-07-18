@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.0.final using JasperReports Library version 6.5.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GraficaSolicitudesEstatus" pageWidth="760" pageHeight="780" orientation="Landscape" columnWidth="760" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9e782827-711d-4bb6-822d-22572aa39bdc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<queryString>
+		<![CDATA[SELECT estado_nombre, total_solicitudes FROM solicitudes_estado]]>
+	</queryString>
+	<field name="estado_nombre" class="java.lang.String"/>
+	<field name="total_solicitudes" class="java.lang.Integer"/>
+	<summary>
+		<band height="230" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="760" height="230" uuid="e590f8c8-8831-4ec4-8ac5-1682514df76e">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{estado_nombre}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total_solicitudes}]]></valueExpression>
+					<labelExpression><![CDATA[$F{estado_nombre}+" = "+$F{total_solicitudes}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,69 @@
+$TTL    3600
+@       IN      SOA     iris.io.  . (
+                5      ; Serial
+                3600   ; Refresh
+                3600    ; Retry
+                3600    ; Expire
+                1)      ; Minimum
+                IN NS  ns0
+                IN NS  ns1
+                IN A   172.26.90.3
+ns0             IN A   172.26.90.3
+ns1             IN A   172.26.90.4
+jvpu0srvs01-1   IN A   172.26.90.3
+jvpu0srvs02-1   IN A   172.26.90.4
+
+; OKD
+jvpo5mast01-1   IN A   172.26.90.131
+jvpo5mast02-1   IN A   172.26.90.132
+jvpo5mast03-1   IN A   172.26.90.133
+jvpo5infr01-1   IN A   172.26.90.134
+jvpo5infr02-1   IN A   172.26.90.135
+jvpo5infr03-1   IN A   172.26.90.136
+jvpoapp01-1     IN A   172.26.90.137
+jvpoapp02-1     IN A   172.26.90.138
+jvpoapp03-1     IN A   172.26.90.139
+jvpoapp04-1     IN A   172.26.90.140
+jvpoapp05-1     IN A   172.26.90.141
+jvpo4log01-1    IN A   172.26.90.142
+jvpo4log02-1    IN A   172.26.90.143
+jvpo4log03-1    IN A   172.26.90.144
+jvpb1lb01-1     IN A   172.26.90.145
+jvpb1lb02-1     IN A   172.26.90.146
+consola.okd     IN A   172.26.90.145
+consola.okd     IN A   172.26.90.146
+
+; Nexus
+jvpr3nexs01-1   IN A   172.26.90.147
+
+; Prosody
+jvps8pros01-1   IN A   172.26.90.149
+jvps8pros02-1   IN A   172.26.90.150
+
+; Mongo
+jvpd8mogd01-1   IN A   172.26.90.151
+jvpd8mogd02-1   IN A   172.26.90.152
+jvpd8mogd03-1   IN A   172.26.90.153
+
+; Cassandra
+jvpdcass01-1    IN A   172.26.90.154
+jvpdcass02-1    IN A   172.26.90.155
+jvpdcass03-1    IN A   172.26.90.156
+
+; Elastic
+jvpd3elas01-1   IN A   172.26.90.157
+jvpd3elas02-1   IN A   172.26.90.158
+jvpd3elas03-1   IN A   172.26.90.159
+
+; Videobridge
+jvpv3jvb101-1   IN A   172.26.90.160
+jvpv3jvb102-1   IN A   172.26.90.161
+jvpv3jvb103-1   IN A   172.26.90.162
+jvpv3jvb104-1   IN A   172.26.90.163
+
+; Nginx
+jvpb1ngnx01-1   IN A   172.26.90.164
+jvpb1ngnx02-1   IN A   172.26.90.165
+
+; Graylog
+jvpn3grlg01-1   IN A   172.26.90.148
